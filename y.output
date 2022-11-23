@@ -1,0 +1,1311 @@
+Grammar
+
+    0 $accept: prog $end
+
+    1 prog: inst PV
+    2     | prog inst PV
+
+    3 inst: let_def
+    4     | exp
+
+    5 let_def: def_id
+    6        | def_fun
+
+    7 def_id: LET ID EQ exp
+
+    8 def_fun: LET fun_head EQ exp
+
+    9 fun_head: ID LPAR id_list RPAR
+
+   10 id_list: ID
+   11        | id_list VIR ID
+
+   12 exp: arith_exp
+   13    | let_exp
+
+   14 arith_exp: MOINS arith_exp
+   15          | arith_exp MOINS arith_exp
+   16          | arith_exp PLUS arith_exp
+   17          | arith_exp DIV arith_exp
+   18          | arith_exp MULT arith_exp
+   19          | arith_exp CONCAT arith_exp
+   20          | atom_exp
+
+   21 atom_exp: NUM
+   22         | FLOAT
+   23         | STRING
+   24         | ID
+   25         | control_exp
+   26         | funcall_exp
+   27         | LPAR exp RPAR
+
+   28 control_exp: if_exp
+
+   29 if_exp: if cond then atom_exp else atom_exp
+
+   30 if: IF
+
+   31 cond: LPAR bool RPAR
+
+   32 then: THEN
+
+   33 else: ELSE
+
+   34 let_exp: let_def IN atom_exp
+   35        | let_def IN let_exp
+
+   36 funcall_exp: ID LPAR arg_list RPAR
+
+   37 arg_list: arith_exp
+   38         | arg_list VIR arith_exp
+
+   39 bool: BOOL
+   40     | bool OR bool
+   41     | bool AND bool
+   42     | NOT bool
+   43     | exp comp exp
+   44     | LPAR bool RPAR
+
+   45 comp: ISLT
+   46     | ISGT
+   47     | ISLEQ
+   48     | ISGEQ
+   49     | ISEQ
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    NUM (258) 21
+    FLOAT (259) 22
+    ID (260) 7 9 10 11 24 36
+    STRING (261) 23
+    PV (262) 1 2
+    LPAR (263) 9 27 31 36 44
+    RPAR (264) 9 27 31 36 44
+    LET (265) 7 8
+    IN (266) 34 35
+    VIR (267) 11 38
+    IF (268) 30
+    THEN (269) 32
+    ELSE (270) 33
+    ISLT (271) 45
+    ISGT (272) 46
+    ISLEQ (273) 47
+    ISGEQ (274) 48
+    ISEQ (275) 49
+    AND (276) 41
+    OR (277) 40
+    NOT (278) 42
+    BOOL (279) 39
+    PLUS (280) 16
+    MOINS (281) 14 15
+    MULT (282) 18
+    DIV (283) 17
+    EQ (284) 7 8
+    CONCAT (285) 19
+    UNA (286)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (32)
+        on left: 0
+    prog (33)
+        on left: 1 2
+        on right: 0 2
+    inst (34)
+        on left: 3 4
+        on right: 1 2
+    let_def (35)
+        on left: 5 6
+        on right: 3 34 35
+    def_id (36)
+        on left: 7
+        on right: 5
+    def_fun (37)
+        on left: 8
+        on right: 6
+    fun_head (38)
+        on left: 9
+        on right: 8
+    id_list (39)
+        on left: 10 11
+        on right: 9 11
+    exp (40)
+        on left: 12 13
+        on right: 4 7 8 27 43
+    arith_exp (41)
+        on left: 14 15 16 17 18 19 20
+        on right: 12 14 15 16 17 18 19 37 38
+    atom_exp (42)
+        on left: 21 22 23 24 25 26 27
+        on right: 20 29 34
+    control_exp (43)
+        on left: 28
+        on right: 25
+    if_exp (44)
+        on left: 29
+        on right: 28
+    if (45)
+        on left: 30
+        on right: 29
+    cond (46)
+        on left: 31
+        on right: 29
+    then (47)
+        on left: 32
+        on right: 29
+    else (48)
+        on left: 33
+        on right: 29
+    let_exp (49)
+        on left: 34 35
+        on right: 13 35
+    funcall_exp (50)
+        on left: 36
+        on right: 26
+    arg_list (51)
+        on left: 37 38
+        on right: 36 38
+    bool (52)
+        on left: 39 40 41 42 43 44
+        on right: 31 40 41 42 44
+    comp (53)
+        on left: 45 46 47 48 49
+        on right: 43
+
+
+State 0
+
+    0 $accept: . prog $end
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    prog         go to state 9
+    inst         go to state 10
+    let_def      go to state 11
+    def_id       go to state 12
+    def_fun      go to state 13
+    exp          go to state 14
+    arith_exp    go to state 15
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 20
+    funcall_exp  go to state 21
+
+
+State 1
+
+   21 atom_exp: NUM .
+
+    $default  reduce using rule 21 (atom_exp)
+
+
+State 2
+
+   22 atom_exp: FLOAT .
+
+    $default  reduce using rule 22 (atom_exp)
+
+
+State 3
+
+   24 atom_exp: ID .
+   36 funcall_exp: ID . LPAR arg_list RPAR
+
+    LPAR  shift, and go to state 22
+
+    $default  reduce using rule 24 (atom_exp)
+
+
+State 4
+
+   23 atom_exp: STRING .
+
+    $default  reduce using rule 23 (atom_exp)
+
+
+State 5
+
+   27 atom_exp: LPAR . exp RPAR
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    let_def      go to state 23
+    def_id       go to state 12
+    def_fun      go to state 13
+    exp          go to state 24
+    arith_exp    go to state 15
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 20
+    funcall_exp  go to state 21
+
+
+State 6
+
+    7 def_id: LET . ID EQ exp
+    8 def_fun: LET . fun_head EQ exp
+
+    ID  shift, and go to state 25
+
+    fun_head  go to state 26
+
+
+State 7
+
+   30 if: IF .
+
+    $default  reduce using rule 30 (if)
+
+
+State 8
+
+   14 arith_exp: MOINS . arith_exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    arith_exp    go to state 27
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    funcall_exp  go to state 21
+
+
+State 9
+
+    0 $accept: prog . $end
+    2 prog: prog . inst PV
+
+    $end    shift, and go to state 28
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    inst         go to state 29
+    let_def      go to state 11
+    def_id       go to state 12
+    def_fun      go to state 13
+    exp          go to state 14
+    arith_exp    go to state 15
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 20
+    funcall_exp  go to state 21
+
+
+State 10
+
+    1 prog: inst . PV
+
+    PV  shift, and go to state 30
+
+
+State 11
+
+    3 inst: let_def .
+   34 let_exp: let_def . IN atom_exp
+   35        | let_def . IN let_exp
+
+    IN  shift, and go to state 31
+
+    $default  reduce using rule 3 (inst)
+
+
+State 12
+
+    5 let_def: def_id .
+
+    $default  reduce using rule 5 (let_def)
+
+
+State 13
+
+    6 let_def: def_fun .
+
+    $default  reduce using rule 6 (let_def)
+
+
+State 14
+
+    4 inst: exp .
+
+    $default  reduce using rule 4 (inst)
+
+
+State 15
+
+   12 exp: arith_exp .
+   15 arith_exp: arith_exp . MOINS arith_exp
+   16          | arith_exp . PLUS arith_exp
+   17          | arith_exp . DIV arith_exp
+   18          | arith_exp . MULT arith_exp
+   19          | arith_exp . CONCAT arith_exp
+
+    PLUS    shift, and go to state 32
+    MOINS   shift, and go to state 33
+    MULT    shift, and go to state 34
+    DIV     shift, and go to state 35
+    CONCAT  shift, and go to state 36
+
+    $default  reduce using rule 12 (exp)
+
+
+State 16
+
+   20 arith_exp: atom_exp .
+
+    $default  reduce using rule 20 (arith_exp)
+
+
+State 17
+
+   25 atom_exp: control_exp .
+
+    $default  reduce using rule 25 (atom_exp)
+
+
+State 18
+
+   28 control_exp: if_exp .
+
+    $default  reduce using rule 28 (control_exp)
+
+
+State 19
+
+   29 if_exp: if . cond then atom_exp else atom_exp
+
+    LPAR  shift, and go to state 37
+
+    cond  go to state 38
+
+
+State 20
+
+   13 exp: let_exp .
+
+    $default  reduce using rule 13 (exp)
+
+
+State 21
+
+   26 atom_exp: funcall_exp .
+
+    $default  reduce using rule 26 (atom_exp)
+
+
+State 22
+
+   36 funcall_exp: ID LPAR . arg_list RPAR
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    arith_exp    go to state 39
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    funcall_exp  go to state 21
+    arg_list     go to state 40
+
+
+State 23
+
+   34 let_exp: let_def . IN atom_exp
+   35        | let_def . IN let_exp
+
+    IN  shift, and go to state 31
+
+
+State 24
+
+   27 atom_exp: LPAR exp . RPAR
+
+    RPAR  shift, and go to state 41
+
+
+State 25
+
+    7 def_id: LET ID . EQ exp
+    9 fun_head: ID . LPAR id_list RPAR
+
+    LPAR  shift, and go to state 42
+    EQ    shift, and go to state 43
+
+
+State 26
+
+    8 def_fun: LET fun_head . EQ exp
+
+    EQ  shift, and go to state 44
+
+
+State 27
+
+   14 arith_exp: MOINS arith_exp .
+   15          | arith_exp . MOINS arith_exp
+   16          | arith_exp . PLUS arith_exp
+   17          | arith_exp . DIV arith_exp
+   18          | arith_exp . MULT arith_exp
+   19          | arith_exp . CONCAT arith_exp
+
+    $default  reduce using rule 14 (arith_exp)
+
+
+State 28
+
+    0 $accept: prog $end .
+
+    $default  accept
+
+
+State 29
+
+    2 prog: prog inst . PV
+
+    PV  shift, and go to state 45
+
+
+State 30
+
+    1 prog: inst PV .
+
+    $default  reduce using rule 1 (prog)
+
+
+State 31
+
+   34 let_exp: let_def IN . atom_exp
+   35        | let_def IN . let_exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+
+    let_def      go to state 23
+    def_id       go to state 12
+    def_fun      go to state 13
+    atom_exp     go to state 46
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 47
+    funcall_exp  go to state 21
+
+
+State 32
+
+   16 arith_exp: arith_exp PLUS . arith_exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    arith_exp    go to state 48
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    funcall_exp  go to state 21
+
+
+State 33
+
+   15 arith_exp: arith_exp MOINS . arith_exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    arith_exp    go to state 49
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    funcall_exp  go to state 21
+
+
+State 34
+
+   18 arith_exp: arith_exp MULT . arith_exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    arith_exp    go to state 50
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    funcall_exp  go to state 21
+
+
+State 35
+
+   17 arith_exp: arith_exp DIV . arith_exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    arith_exp    go to state 51
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    funcall_exp  go to state 21
+
+
+State 36
+
+   19 arith_exp: arith_exp CONCAT . arith_exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    arith_exp    go to state 52
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    funcall_exp  go to state 21
+
+
+State 37
+
+   31 cond: LPAR . bool RPAR
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 53
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+    NOT     shift, and go to state 54
+    BOOL    shift, and go to state 55
+    MOINS   shift, and go to state 8
+
+    let_def      go to state 23
+    def_id       go to state 12
+    def_fun      go to state 13
+    exp          go to state 56
+    arith_exp    go to state 15
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 20
+    funcall_exp  go to state 21
+    bool         go to state 57
+
+
+State 38
+
+   29 if_exp: if cond . then atom_exp else atom_exp
+
+    THEN  shift, and go to state 58
+
+    then  go to state 59
+
+
+State 39
+
+   15 arith_exp: arith_exp . MOINS arith_exp
+   16          | arith_exp . PLUS arith_exp
+   17          | arith_exp . DIV arith_exp
+   18          | arith_exp . MULT arith_exp
+   19          | arith_exp . CONCAT arith_exp
+   37 arg_list: arith_exp .
+
+    PLUS    shift, and go to state 32
+    MOINS   shift, and go to state 33
+    MULT    shift, and go to state 34
+    DIV     shift, and go to state 35
+    CONCAT  shift, and go to state 36
+
+    $default  reduce using rule 37 (arg_list)
+
+
+State 40
+
+   36 funcall_exp: ID LPAR arg_list . RPAR
+   38 arg_list: arg_list . VIR arith_exp
+
+    RPAR  shift, and go to state 60
+    VIR   shift, and go to state 61
+
+
+State 41
+
+   27 atom_exp: LPAR exp RPAR .
+
+    $default  reduce using rule 27 (atom_exp)
+
+
+State 42
+
+    9 fun_head: ID LPAR . id_list RPAR
+
+    ID  shift, and go to state 62
+
+    id_list  go to state 63
+
+
+State 43
+
+    7 def_id: LET ID EQ . exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    let_def      go to state 23
+    def_id       go to state 12
+    def_fun      go to state 13
+    exp          go to state 64
+    arith_exp    go to state 15
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 20
+    funcall_exp  go to state 21
+
+
+State 44
+
+    8 def_fun: LET fun_head EQ . exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    let_def      go to state 23
+    def_id       go to state 12
+    def_fun      go to state 13
+    exp          go to state 65
+    arith_exp    go to state 15
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 20
+    funcall_exp  go to state 21
+
+
+State 45
+
+    2 prog: prog inst PV .
+
+    $default  reduce using rule 2 (prog)
+
+
+State 46
+
+   34 let_exp: let_def IN atom_exp .
+
+    $default  reduce using rule 34 (let_exp)
+
+
+State 47
+
+   35 let_exp: let_def IN let_exp .
+
+    $default  reduce using rule 35 (let_exp)
+
+
+State 48
+
+   15 arith_exp: arith_exp . MOINS arith_exp
+   16          | arith_exp . PLUS arith_exp
+   16          | arith_exp PLUS arith_exp .
+   17          | arith_exp . DIV arith_exp
+   18          | arith_exp . MULT arith_exp
+   19          | arith_exp . CONCAT arith_exp
+
+    MULT    shift, and go to state 34
+    DIV     shift, and go to state 35
+    CONCAT  shift, and go to state 36
+
+    $default  reduce using rule 16 (arith_exp)
+
+
+State 49
+
+   15 arith_exp: arith_exp . MOINS arith_exp
+   15          | arith_exp MOINS arith_exp .
+   16          | arith_exp . PLUS arith_exp
+   17          | arith_exp . DIV arith_exp
+   18          | arith_exp . MULT arith_exp
+   19          | arith_exp . CONCAT arith_exp
+
+    MULT    shift, and go to state 34
+    DIV     shift, and go to state 35
+    CONCAT  shift, and go to state 36
+
+    $default  reduce using rule 15 (arith_exp)
+
+
+State 50
+
+   15 arith_exp: arith_exp . MOINS arith_exp
+   16          | arith_exp . PLUS arith_exp
+   17          | arith_exp . DIV arith_exp
+   18          | arith_exp . MULT arith_exp
+   18          | arith_exp MULT arith_exp .
+   19          | arith_exp . CONCAT arith_exp
+
+    CONCAT  shift, and go to state 36
+
+    $default  reduce using rule 18 (arith_exp)
+
+
+State 51
+
+   15 arith_exp: arith_exp . MOINS arith_exp
+   16          | arith_exp . PLUS arith_exp
+   17          | arith_exp . DIV arith_exp
+   17          | arith_exp DIV arith_exp .
+   18          | arith_exp . MULT arith_exp
+   19          | arith_exp . CONCAT arith_exp
+
+    CONCAT  shift, and go to state 36
+
+    $default  reduce using rule 17 (arith_exp)
+
+
+State 52
+
+   15 arith_exp: arith_exp . MOINS arith_exp
+   16          | arith_exp . PLUS arith_exp
+   17          | arith_exp . DIV arith_exp
+   18          | arith_exp . MULT arith_exp
+   19          | arith_exp . CONCAT arith_exp
+   19          | arith_exp CONCAT arith_exp .
+
+    $default  reduce using rule 19 (arith_exp)
+
+
+State 53
+
+   27 atom_exp: LPAR . exp RPAR
+   44 bool: LPAR . bool RPAR
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 53
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+    NOT     shift, and go to state 54
+    BOOL    shift, and go to state 55
+    MOINS   shift, and go to state 8
+
+    let_def      go to state 23
+    def_id       go to state 12
+    def_fun      go to state 13
+    exp          go to state 66
+    arith_exp    go to state 15
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 20
+    funcall_exp  go to state 21
+    bool         go to state 67
+
+
+State 54
+
+   42 bool: NOT . bool
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 53
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+    NOT     shift, and go to state 54
+    BOOL    shift, and go to state 55
+    MOINS   shift, and go to state 8
+
+    let_def      go to state 23
+    def_id       go to state 12
+    def_fun      go to state 13
+    exp          go to state 56
+    arith_exp    go to state 15
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 20
+    funcall_exp  go to state 21
+    bool         go to state 68
+
+
+State 55
+
+   39 bool: BOOL .
+
+    $default  reduce using rule 39 (bool)
+
+
+State 56
+
+   43 bool: exp . comp exp
+
+    ISLT   shift, and go to state 69
+    ISGT   shift, and go to state 70
+    ISLEQ  shift, and go to state 71
+    ISGEQ  shift, and go to state 72
+    ISEQ   shift, and go to state 73
+
+    comp  go to state 74
+
+
+State 57
+
+   31 cond: LPAR bool . RPAR
+   40 bool: bool . OR bool
+   41     | bool . AND bool
+
+    RPAR  shift, and go to state 75
+    AND   shift, and go to state 76
+    OR    shift, and go to state 77
+
+
+State 58
+
+   32 then: THEN .
+
+    $default  reduce using rule 32 (then)
+
+
+State 59
+
+   29 if_exp: if cond then . atom_exp else atom_exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    IF      shift, and go to state 7
+
+    atom_exp     go to state 78
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    funcall_exp  go to state 21
+
+
+State 60
+
+   36 funcall_exp: ID LPAR arg_list RPAR .
+
+    $default  reduce using rule 36 (funcall_exp)
+
+
+State 61
+
+   38 arg_list: arg_list VIR . arith_exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    arith_exp    go to state 79
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    funcall_exp  go to state 21
+
+
+State 62
+
+   10 id_list: ID .
+
+    $default  reduce using rule 10 (id_list)
+
+
+State 63
+
+    9 fun_head: ID LPAR id_list . RPAR
+   11 id_list: id_list . VIR ID
+
+    RPAR  shift, and go to state 80
+    VIR   shift, and go to state 81
+
+
+State 64
+
+    7 def_id: LET ID EQ exp .
+
+    $default  reduce using rule 7 (def_id)
+
+
+State 65
+
+    8 def_fun: LET fun_head EQ exp .
+
+    $default  reduce using rule 8 (def_fun)
+
+
+State 66
+
+   27 atom_exp: LPAR exp . RPAR
+   43 bool: exp . comp exp
+
+    RPAR   shift, and go to state 41
+    ISLT   shift, and go to state 69
+    ISGT   shift, and go to state 70
+    ISLEQ  shift, and go to state 71
+    ISGEQ  shift, and go to state 72
+    ISEQ   shift, and go to state 73
+
+    comp  go to state 74
+
+
+State 67
+
+   40 bool: bool . OR bool
+   41     | bool . AND bool
+   44     | LPAR bool . RPAR
+
+    RPAR  shift, and go to state 82
+    AND   shift, and go to state 76
+    OR    shift, and go to state 77
+
+
+State 68
+
+   40 bool: bool . OR bool
+   41     | bool . AND bool
+   42     | NOT bool .
+
+    $default  reduce using rule 42 (bool)
+
+
+State 69
+
+   45 comp: ISLT .
+
+    $default  reduce using rule 45 (comp)
+
+
+State 70
+
+   46 comp: ISGT .
+
+    $default  reduce using rule 46 (comp)
+
+
+State 71
+
+   47 comp: ISLEQ .
+
+    $default  reduce using rule 47 (comp)
+
+
+State 72
+
+   48 comp: ISGEQ .
+
+    $default  reduce using rule 48 (comp)
+
+
+State 73
+
+   49 comp: ISEQ .
+
+    $default  reduce using rule 49 (comp)
+
+
+State 74
+
+   43 bool: exp comp . exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+    MOINS   shift, and go to state 8
+
+    let_def      go to state 23
+    def_id       go to state 12
+    def_fun      go to state 13
+    exp          go to state 83
+    arith_exp    go to state 15
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 20
+    funcall_exp  go to state 21
+
+
+State 75
+
+   31 cond: LPAR bool RPAR .
+
+    $default  reduce using rule 31 (cond)
+
+
+State 76
+
+   41 bool: bool AND . bool
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 53
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+    NOT     shift, and go to state 54
+    BOOL    shift, and go to state 55
+    MOINS   shift, and go to state 8
+
+    let_def      go to state 23
+    def_id       go to state 12
+    def_fun      go to state 13
+    exp          go to state 56
+    arith_exp    go to state 15
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 20
+    funcall_exp  go to state 21
+    bool         go to state 84
+
+
+State 77
+
+   40 bool: bool OR . bool
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 53
+    LET     shift, and go to state 6
+    IF      shift, and go to state 7
+    NOT     shift, and go to state 54
+    BOOL    shift, and go to state 55
+    MOINS   shift, and go to state 8
+
+    let_def      go to state 23
+    def_id       go to state 12
+    def_fun      go to state 13
+    exp          go to state 56
+    arith_exp    go to state 15
+    atom_exp     go to state 16
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    let_exp      go to state 20
+    funcall_exp  go to state 21
+    bool         go to state 85
+
+
+State 78
+
+   29 if_exp: if cond then atom_exp . else atom_exp
+
+    ELSE  shift, and go to state 86
+
+    else  go to state 87
+
+
+State 79
+
+   15 arith_exp: arith_exp . MOINS arith_exp
+   16          | arith_exp . PLUS arith_exp
+   17          | arith_exp . DIV arith_exp
+   18          | arith_exp . MULT arith_exp
+   19          | arith_exp . CONCAT arith_exp
+   38 arg_list: arg_list VIR arith_exp .
+
+    PLUS    shift, and go to state 32
+    MOINS   shift, and go to state 33
+    MULT    shift, and go to state 34
+    DIV     shift, and go to state 35
+    CONCAT  shift, and go to state 36
+
+    $default  reduce using rule 38 (arg_list)
+
+
+State 80
+
+    9 fun_head: ID LPAR id_list RPAR .
+
+    $default  reduce using rule 9 (fun_head)
+
+
+State 81
+
+   11 id_list: id_list VIR . ID
+
+    ID  shift, and go to state 88
+
+
+State 82
+
+   44 bool: LPAR bool RPAR .
+
+    $default  reduce using rule 44 (bool)
+
+
+State 83
+
+   43 bool: exp comp exp .
+
+    $default  reduce using rule 43 (bool)
+
+
+State 84
+
+   40 bool: bool . OR bool
+   41     | bool . AND bool
+   41     | bool AND bool .
+
+    $default  reduce using rule 41 (bool)
+
+
+State 85
+
+   40 bool: bool . OR bool
+   40     | bool OR bool .
+   41     | bool . AND bool
+
+    AND  shift, and go to state 76
+
+    $default  reduce using rule 40 (bool)
+
+
+State 86
+
+   33 else: ELSE .
+
+    $default  reduce using rule 33 (else)
+
+
+State 87
+
+   29 if_exp: if cond then atom_exp else . atom_exp
+
+    NUM     shift, and go to state 1
+    FLOAT   shift, and go to state 2
+    ID      shift, and go to state 3
+    STRING  shift, and go to state 4
+    LPAR    shift, and go to state 5
+    IF      shift, and go to state 7
+
+    atom_exp     go to state 89
+    control_exp  go to state 17
+    if_exp       go to state 18
+    if           go to state 19
+    funcall_exp  go to state 21
+
+
+State 88
+
+   11 id_list: id_list VIR ID .
+
+    $default  reduce using rule 11 (id_list)
+
+
+State 89
+
+   29 if_exp: if cond then atom_exp else atom_exp .
+
+    $default  reduce using rule 29 (if_exp)
