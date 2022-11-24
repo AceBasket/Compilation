@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -31,8 +31,9 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
 #ifndef YY_YY_Y_TAB_H_INCLUDED
 # define YY_YY_Y_TAB_H_INCLUDED
@@ -44,43 +45,52 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    NUM = 258,
-    FLOAT = 259,
-    ID = 260,
-    STRING = 261,
-    PV = 262,
-    LPAR = 263,
-    RPAR = 264,
-    LET = 265,
-    IN = 266,
-    VIR = 267,
-    IF = 268,
-    THEN = 269,
-    ELSE = 270,
-    ISLT = 271,
-    ISGT = 272,
-    ISLEQ = 273,
-    ISGEQ = 274,
-    ISEQ = 275,
-    AND = 276,
-    OR = 277,
-    NOT = 278,
-    BOOL = 279,
-    PLUS = 280,
-    MOINS = 281,
-    MULT = 282,
-    DIV = 283,
-    EQ = 284,
-    CONCAT = 285,
-    UNA = 286
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    NUM = 258,                     /* NUM  */
+    FLOAT = 259,                   /* FLOAT  */
+    ID = 260,                      /* ID  */
+    STRING = 261,                  /* STRING  */
+    PV = 262,                      /* PV  */
+    LPAR = 263,                    /* LPAR  */
+    RPAR = 264,                    /* RPAR  */
+    LET = 265,                     /* LET  */
+    IN = 266,                      /* IN  */
+    VIR = 267,                     /* VIR  */
+    IF = 268,                      /* IF  */
+    THEN = 269,                    /* THEN  */
+    ELSE = 270,                    /* ELSE  */
+    ISLT = 271,                    /* ISLT  */
+    ISGT = 272,                    /* ISGT  */
+    ISLEQ = 273,                   /* ISLEQ  */
+    ISGEQ = 274,                   /* ISGEQ  */
+    ISEQ = 275,                    /* ISEQ  */
+    AND = 276,                     /* AND  */
+    OR = 277,                      /* OR  */
+    NOT = 278,                     /* NOT  */
+    BOOL = 279,                    /* BOOL  */
+    PLUS = 280,                    /* PLUS  */
+    MOINS = 281,                   /* MOINS  */
+    MULT = 282,                    /* MULT  */
+    DIV = 283,                     /* DIV  */
+    EQ = 284,                      /* EQ  */
+    CONCAT = 285,                  /* CONCAT  */
+    UNA = 286                      /* UNA  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
-/* Tokens.  */
+/* Token kinds.  */
+#define YYEMPTY -2
+#define YYEOF 0
+#define YYerror 256
+#define YYUNDEF 257
 #define NUM 258
 #define FLOAT 259
 #define ID 260
@@ -113,7 +123,18 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 22 "myml.y"
+
+  int val_int;
+  char* val_string;
+  float val_float;
+
+#line 135 "y.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -121,6 +142,8 @@ typedef int YYSTYPE;
 
 extern YYSTYPE yylval;
 
+
 int yyparse (void);
+
 
 #endif /* !YY_YY_Y_TAB_H_INCLUDED  */

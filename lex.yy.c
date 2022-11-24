@@ -855,7 +855,7 @@ YY_RULE_SETUP
 case 18:
 YY_RULE_SETUP
 #line 50 "myml.l"
-{if (yytext == "false") yylval = 0; else if (yytext == "true") yylval = 1; return BOOL;}
+{return BOOL;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
@@ -880,23 +880,23 @@ YY_RULE_SETUP
 case 23:
 YY_RULE_SETUP
 #line 57 "myml.l"
-{yylval = atof(yytext); return FLOAT; }
+{yylval.val_float = atof(yytext); return FLOAT; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 58 "myml.l"
-{yylval = atoi(yytext); return NUM; }
+{yylval.val_int = atoi(yytext); return NUM; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 59 "myml.l"
-{string_to_sid(yytext); return ID;}
+{yylval.val_string = string_to_sid(yytext); return ID;}
 	YY_BREAK
 case 26:
 /* rule 26 can match eol */
 YY_RULE_SETUP
 #line 60 "myml.l"
-{yyltext = yytext; return STRING;}
+{return STRING;}
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */

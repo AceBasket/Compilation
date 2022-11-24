@@ -19,8 +19,13 @@ void yyerror (char* s) {
 
 %}
 
+%union{
+  int val_int;
+  char* val_string;
+  float val_float;
+}
 
-%token NUM FLOAT ID STRING
+%token <val_int> NUM <val_float> FLOAT <val_string> ID <val_string> STRING
 
 %token PV LPAR RPAR LET IN VIR
 
@@ -43,10 +48,12 @@ void yyerror (char* s) {
 %left CONCAT
 %nonassoc UNA    /* pseudo token pour assurer une priorite locale */
 
+%type <val_string> def_id
+%type <val_int> exp
+%type <val_int> arith_exp
 
 %start prog 
  
-
 
 %%
 
@@ -69,9 +76,11 @@ let_def : def_id
 | def_fun
 ;
 
-def_id : LET ID EQ exp  //{$$ = $4; printf("LOADI %d\n", $4);}
-;
-
+def_id : LET ID EQ exp  {set_symbol_value($2,$4); printf("/* Valeur de %s stockée à fd+%d*/\n",$2,*$2);} // return de get_symbol_value() de type symb_value_type
+                                                                                                        // mais dans quelle variable le mettre ?
+// creer un offset/ le stocker dans la table des symboles/ 
+; // lorsqu'on utilise la variable il faut aller lire l'adresse dans la table des symboles
+// fp = frame pointer / sp = stack pointer
 def_fun : LET fun_head EQ exp {printf("Une définition de fonction\n");}
 ;
 
@@ -83,26 +92,26 @@ id_list : ID
 ;
 
 
-exp : arith_exp
-| let_exp
+exp : arith_exp {}
+| let_exp {}
 ;
 
-arith_exp : MOINS arith_exp %prec UNA
-| arith_exp MOINS arith_exp {printf("SUBI\n");}
-| arith_exp PLUS arith_exp {printf("ADDI\n");}
-| arith_exp DIV arith_exp {printf("DIVI\n");}
-| arith_exp MULT arith_exp {printf("MULTI\n");}
+arith_exp : MOINS arith_exp %prec UNA {}
+| arith_exp MOINS arith_exp {printf("(%d) SUBI\n",$1-$3);}
+| arith_exp PLUS arith_exp {printf("(%d) ADDI\n",$1+$3);}
+| arith_exp DIV arith_exp {printf("(%d) DIVI\n",$1/$3);}
+| arith_exp MULT arith_exp {printf("(%d) MULTI\n",$1*$3);}
 | arith_exp CONCAT arith_exp {printf("concat\n");}
-| atom_exp
+| atom_exp {}
 ;
 
 atom_exp : NUM { printf("LOADI %d\n", $1);}
 | FLOAT //{printf("float\n");}
 | STRING //{printf("string\n");}
-| ID //{$$ = $1; printf("LOADI %d\n", $1);}
-| control_exp
+| ID { get_symbol_value($1); printf("LOADI %s\n", $1);} // return de get_symbol_value() de type symb_value_type
+| control_exp                                           // Mais dans quoi le mettre ???
 | funcall_exp
-| LPAR exp RPAR {printf("(%d)", $2);}
+| LPAR exp RPAR
 ;
 
 control_exp : if_exp

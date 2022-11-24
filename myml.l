@@ -47,15 +47,15 @@ identifier          [[:alpha:]][[:alnum:]_]*
 "else"       {return ELSE;}
 
 
-{boolean}    {if (yytext == "false") yylval = 0; else if (yytext == "true") yylval = 1; return BOOL;}
+{boolean}    {return BOOL;}
 
 "("          {return LPAR;}
 ")"          {return RPAR;}
 ","          {return VIR;}
 ";"          {return PV;}
 
-{float}      {yylval = atof(yytext); return FLOAT; }
-{integer}    {yylval = atoi(yytext); return NUM; }
-{identifier} {string_to_sid(yytext); return ID;}
-{string}     {yyltext = yytext; return STRING;}
+{float}      {yylval.val_float = atof(yytext); return FLOAT; }
+{integer}    {yylval.val_int = atoi(yytext); return NUM; }
+{identifier} {yylval.val_string = string_to_sid(yytext); return ID;}
+{string}     {return STRING;}
 {whitespace} ;
