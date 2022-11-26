@@ -97,18 +97,18 @@ exp : arith_exp {}
 ;
 
 arith_exp : MOINS arith_exp %prec UNA {}
-| arith_exp MOINS arith_exp {printf("(%d) SUBI\n",$1-$3);}
-| arith_exp PLUS arith_exp {printf("(%d) ADDI\n",$1+$3);}
-| arith_exp DIV arith_exp {printf("(%d) DIVI\n",$1/$3);}
-| arith_exp MULT arith_exp {printf("(%d) MULTI\n",$1*$3);}
+| arith_exp MOINS arith_exp {printf("SUBI\n");}
+| arith_exp PLUS arith_exp {printf("ADDI\n");}
+| arith_exp DIV arith_exp {printf("DIVI\n");}
+| arith_exp MULT arith_exp {printf("MULTI\n");}
 | arith_exp CONCAT arith_exp {printf("concat\n");}
 | atom_exp {}
 ;
 
-atom_exp : NUM { printf("LOADI %d\n", $1);}
+atom_exp : NUM {printf("LOADI %d\n", $1);}
 | FLOAT //{printf("float\n");}
 | STRING //{printf("string\n");}
-| ID { get_symbol_value($1); printf("LOADI %s\n", $1);} // return de get_symbol_value() de type symb_value_type
+| ID {printf("LOAD (fp + %d)\n", *$1);} // return de get_symbol_value() de type symb_value_type
 | control_exp                                           // Mais dans quoi le mettre ???
 | funcall_exp
 | LPAR exp RPAR
@@ -171,7 +171,7 @@ int main () {
     /* As a starter, one may comment the above line for usual stdin as input */
 
     yyparse();
-
+    /* free_symbols(); */
     /* any open file shall be closed */
     /* fclose(file_out); */
     /* fclose(file_in); */

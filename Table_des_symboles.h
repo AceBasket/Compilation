@@ -36,4 +36,7 @@ symb_value_type get_symbol_value(sid symb_id);
 /* set the value of symbol symb_id to value */
 symb_value_type set_symbol_value(sid symb_id,symb_value_type value);
 
+/* free symbol table */
+void free_symbols();
+
 #endif

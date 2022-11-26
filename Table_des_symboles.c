@@ -33,7 +33,8 @@ symb_value_type get_symbol_value(sid symb_id) {
 	elem * tracker=storage;
 	/* look into the linked list for the symbol value */
 	while (tracker) {
-		if (tracker -> symbol_name == symb_id) return tracker -> symbol_value; 
+		if (tracker -> symbol_name == symb_id) 
+            return tracker -> symbol_value; 
 		tracker = tracker -> next;
 	}
     
@@ -67,6 +68,7 @@ symb_value_type set_symbol_value(sid symb_id,symb_value_type value) {
 	/* otherwise insert it at head of storage with proper value */
 	
 	tracker = malloc(sizeof(elem));
+    printf("malloc effectué\n");
 	tracker -> symbol_name = symb_id;
 	tracker -> symbol_value = value;
 	tracker -> next = storage;
@@ -74,3 +76,13 @@ symb_value_type set_symbol_value(sid symb_id,symb_value_type value) {
 	return storage -> symbol_value;
 }
 
+void free_symbols() {
+    elem *e = storage;
+    while (e != storage )
+    {
+        elem *next = e->next;
+        free(e);
+        printf("free effectué\n");
+        e = next;
+    }
+}
