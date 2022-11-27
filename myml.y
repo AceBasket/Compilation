@@ -51,6 +51,7 @@ void yyerror (char* s) {
 %type <val_string> def_id
 %type <val_int> exp
 %type <val_int> arith_exp
+%type <val_int> atom_exp
 
 %start prog 
  
@@ -59,9 +60,9 @@ void yyerror (char* s) {
 
  /* a program is a list of instruction */
 
-prog : inst PV {printf("Afficher résultat\n");}
+prog : inst PV {printf("Une instruction\n");}
 
-| prog inst PV {printf("Afficher un autre résultat\n");}
+| prog inst PV {printf("Une autre instruction\n");}
 ;
 
 /* a instruction is either a value or a definition (that indeed looks like an affectation) */
@@ -97,21 +98,21 @@ exp : arith_exp {}
 ;
 
 arith_exp : MOINS arith_exp %prec UNA {}
-| arith_exp MOINS arith_exp {printf("SUBI\n");}
-| arith_exp PLUS arith_exp {printf("ADDI\n");}
-| arith_exp DIV arith_exp {printf("DIVI\n");}
-| arith_exp MULT arith_exp {printf("MULTI\n");}
+| arith_exp MOINS arith_exp {$$ = $1-$3;printf("(%d) SUBI\n",$1-$3);}
+| arith_exp PLUS arith_exp {$$ = $1+$3;printf("(%d) ADDI\n",$1+$3);}
+| arith_exp DIV arith_exp {$$ = $1/$3;printf("(%d) DIVI\n",$1/$3);}
+| arith_exp MULT arith_exp {$$ = $1*$3;printf("(%d) MULTI\n",$1*$3);}
 | arith_exp CONCAT arith_exp {printf("concat\n");}
 | atom_exp {}
 ;
 
-atom_exp : NUM {printf("LOADI %d\n", $1);}
-| FLOAT //{printf("float\n");}
-| STRING //{printf("string\n");}
-| ID {printf("LOAD (fp + %d)\n", *$1);} // return de get_symbol_value() de type symb_value_type
-| control_exp                                           // Mais dans quoi le mettre ???
-| funcall_exp
-| LPAR exp RPAR
+atom_exp : NUM { printf("LOADI %d\n", $1);}
+| FLOAT {}//{printf("float\n");}
+| STRING {}//{printf("string\n");}
+| ID { $$ = get_symbol_value($1); printf("LOAD (fp+%d)\n", *$1);} // return de get_symbol_value() de type symb_value_type
+| control_exp {}                                           // Mais dans quoi le mettre ???
+| funcall_exp {}
+| LPAR exp RPAR {$$ = $2;printf("Parentheses appellees\n");}
 ;
 
 control_exp : if_exp
@@ -171,7 +172,7 @@ int main () {
     /* As a starter, one may comment the above line for usual stdin as input */
 
     yyparse();
-    /* free_symbols(); */
+
     /* any open file shall be closed */
     /* fclose(file_out); */
     /* fclose(file_in); */
