@@ -148,16 +148,16 @@ Non-terminaux, suivis des règles où ils apparaissent
     if_exp (44)
         à gauche: 29
         à droite: 28
-    if (45)
+    if <val_int> (45)
         à gauche: 30
         à droite: 29
     cond (46)
         à gauche: 31
         à droite: 29
-    then (47)
+    then <val_int> (47)
         à gauche: 32
         à droite: 29
-    else (48)
+    else <val_int> (48)
         à gauche: 33
         à droite: 29
     let_exp (49)

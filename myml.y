@@ -12,7 +12,11 @@ FILE * file_out = NULL;
   
 extern int yylex();
 extern int yyparse();
+
 int offset = 0;
+int label_number = 0;
+int nb_if =0;
+
 void yyerror (char* s) {
    printf("\n%s\n",s);
  }
@@ -55,6 +59,9 @@ void yyerror (char* s) {
 %type <val_int> exp
 %type <val_int> arith_exp
 %type <val_int> atom_exp
+%type <val_int> if
+%type <val_int> then
+%type <val_int> else
 
 %start prog 
  
@@ -80,7 +87,7 @@ let_def : def_id
 | def_fun
 ;
 
-def_id : LET ID EQ exp  {add_symbol_value($2,offset); printf("/* Value of %s stored at stack index fp+%d*/\n",$2,offset++);}
+def_id : LET ID EQ exp  {add_symbol_value($2,offset); printf("/* Value of %s stored at stack index fp+%d */\n",$2,offset++);}
 // creer un offset/ le stocker dans la table des symboles/ 
 ; // lorsqu'on utilise la variable il faut aller lire l'adresse dans la table des symboles
 // fp = frame pointer / sp = stack pointer
@@ -111,17 +118,17 @@ arith_exp : MOINS arith_exp %prec UNA {}
 atom_exp : NUM {printf("LOADI %d\n", $1);}
 | FLOAT {}//{printf("float\n");}
 | STRING {}//{printf("string\n");}
-| ID {printf("LOAD (fp+%d)\n /*Loading %s at stack index fp + %d*/\n", get_symbol_value($1), $1, get_symbol_value($1));} 
+| ID {printf("LOAD (fp+%d)\n /* Loading %s at stack index fp + %d */\n", get_symbol_value($1), $1, get_symbol_value($1));} 
 | control_exp {}                                           
 | funcall_exp {}
 | LPAR exp RPAR {}
 ;
 
-control_exp : if_exp
+control_exp : if_exp {}
 ;
 
 
-if_exp : if cond then atom_exp else atom_exp {printf("L1:\n /*End if-then-else */\n ");}
+if_exp : if cond then atom_exp else atom_exp { printf("L%d:\n/* End if-then-else */\n",label_number+1);label_number = label_number - (2*(nb_if-1));}
 ;
 /* Comment numeroter les labels ?
 mettre des %d dans les printf des IFN  et GOTO
@@ -134,11 +141,12 @@ label du court_circuit du else (LCCE) impair
 pour en creer des nouveaux prendre le label L: 
   nouveau LE = 2*L
   nouveau LCCE = 2*L+1 
+let z = if (x > 1) then if (y>3) then 0 else 1 else if (y<5) then 2 else 3;
 */
-if : IF {}; 
+if : IF {label_number = 2*nb_if; nb_if = nb_if +1; $$ = label_number;}; 
 cond : LPAR bool RPAR {}; 
-then : THEN {printf("IFN L0\n /* negation condition tested*/\n /*case true*/\n");}; 
-else : ELSE {printf("GOTO L1\n /* case false*/\n L0:\n");}; 
+then : THEN {$$ = $<val_int>-1; printf("IFN L%d\n/* negation condition tested */\n/* case true */\n",label_number);}; 
+else : ELSE {$$ = $<val_int>-1; printf("GOTO L%d\n/* case false */\nL%d:\n",label_number+1,label_number);}; 
 
 
 let_exp : let_def IN atom_exp {delete_symbol_value(); offset--; printf("DRCP\n");}
@@ -156,7 +164,7 @@ bool : BOOL
 | bool OR bool
 | bool AND bool
 | NOT bool %prec UNA 
-| exp comp exp {printf("%s\n /*condition loaded*/\n", $2);}
+| exp comp exp {printf("%s\n /* condition loaded */\n", $2);}
 | LPAR bool RPAR
 ;
 
