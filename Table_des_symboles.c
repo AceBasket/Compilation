@@ -75,6 +75,45 @@ symb_value_type set_symbol_value(sid symb_id,symb_value_type value) {
 	return storage -> symbol_value;
 }
 
+/* set the value of symbol symb_id to value */
+symb_value_type add_symbol_value(sid symb_id,symb_value_type value) {
+
+	elem * tracker;
+	
+	/* (optionnal) check that sid is valid symbol name and exit error if not */
+	if (! sid_valid(symb_id)) {
+		fprintf(stderr,"Error : symbol id %p is not have no valid sid\n",symb_id);
+		exit(-1);
+	}
+		
+	/* look for the presence of symb_id in storage */
+	
+	tracker = storage;
+	while (tracker) {
+		tracker = tracker -> next;
+	}
+	
+	/* otherwise insert it at head of storage with proper value */
+	
+	tracker = malloc(sizeof(elem));
+	tracker -> symbol_name = symb_id;
+	tracker -> symbol_value = value;
+	tracker -> next = storage;
+	storage = tracker;
+	return storage -> symbol_value;
+}
+
+symb_value_type delete_symbol_value(sid symb_id) {
+	elem * tracker=storage;
+	elem * trackerdel;
+	/* look into the linked list for the symbol value */
+	while (tracker) {
+		if (tracker -> symbol_name == symb_id) 
+            trackerdel = tracker; 
+		tracker = tracker -> next;
+	}
+	free(trackerdel);
+}
 void free_symbols() {
     elem *e = storage;
     while (e != storage )
