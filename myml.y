@@ -31,7 +31,7 @@ void yyerror (char* s) {
 
 %token IF THEN ELSE
 
-%token ISLT ISGT ISLEQ ISGEQ ISEQ
+%token <val_string>ISLT <val_string>ISGT <val_string>ISLEQ <val_string>ISGEQ <val_string>ISEQ
 %left ISEQ
 %left ISLT ISGT ISLEQ ISGEQ
 
@@ -49,6 +49,7 @@ void yyerror (char* s) {
 %nonassoc UNA    /* pseudo token pour assurer une priorite locale */
 
 %type <val_string> def_id
+%type <val_string> comp
 %type <val_int> exp
 %type <val_int> arith_exp
 %type <val_int> atom_exp
@@ -60,15 +61,15 @@ void yyerror (char* s) {
 
  /* a program is a list of instruction */
 
-prog : inst PV {printf("Une instruction\n");}
+prog : inst PV {printf("/* fin d'une instruction */\n");}
 
-| prog inst PV {printf("Une autre instruction\n");}
+| prog inst PV {printf("/* fin d'une autre instruction */\n");}
 ;
 
 /* a instruction is either a value or a definition (that indeed looks like an affectation) */
 
 inst : let_def
-| exp
+| exp {printf("DROP\n/* dropping useless value */");}
 ;
 
 
@@ -77,7 +78,7 @@ let_def : def_id
 | def_fun
 ;
 
-def_id : LET ID EQ exp  {set_symbol_value($2,$4); printf("/* Valeur de %s stockée à fp+%d*/\n",$2,*$2);}
+def_id : LET ID EQ exp  {set_symbol_value($2,$4); printf("/* Value of %s stored at stack index fp+%d*/\n",$2,*$2);}
 // creer un offset/ le stocker dans la table des symboles/ 
 ; // lorsqu'on utilise la variable il faut aller lire l'adresse dans la table des symboles
 // fp = frame pointer / sp = stack pointer
@@ -93,7 +94,7 @@ id_list : ID
 
 
 exp : arith_exp {}
-| let_exp {}
+| let_exp {printf("local symbol\n");}
 ;
 
 arith_exp : MOINS arith_exp %prec UNA {}
@@ -105,13 +106,13 @@ arith_exp : MOINS arith_exp %prec UNA {}
 | atom_exp {}
 ;
 
-atom_exp : NUM { printf("LOADI %d\n", $1);}
+atom_exp : NUM {printf("LOADI %d\n", $1);}
 | FLOAT {}//{printf("float\n");}
 | STRING {}//{printf("string\n");}
-| ID {printf("LOAD (fp+%d)\n", *$1);} 
+| ID {printf("LOAD (fp+%d)\n /*Loading %s at stack index fp + %d*/\n", *$1, $1, *$1);} 
 | control_exp {}                                           
 | funcall_exp {}
-| LPAR exp RPAR {printf("Parentheses appellees\n");}
+| LPAR exp RPAR {}
 ;
 
 control_exp : if_exp
@@ -121,13 +122,13 @@ control_exp : if_exp
 if_exp : if cond then atom_exp else atom_exp 
 ;
 
-if : IF {printf("if\n");}; 
-cond : LPAR bool RPAR {printf("(\n");}; 
-then : THEN {printf("then\n");}; 
-else : ELSE {printf("else\n");}; 
+if : IF {}; 
+cond : LPAR bool RPAR {}; 
+then : THEN {}; 
+else : ELSE {}; 
 
 
-let_exp : let_def IN atom_exp 
+let_exp : let_def IN atom_exp {printf("DRCP\n");}
 | let_def IN let_exp
 ;
 
@@ -142,12 +143,22 @@ bool : BOOL
 | bool OR bool
 | bool AND bool
 | NOT bool %prec UNA 
-| exp comp exp
+| exp comp exp {printf("%s\n", $2);}
 | LPAR bool RPAR
 ;
 
 
-comp :  ISLT | ISGT | ISLEQ | ISGEQ | ISEQ
+comp :  ISLT {}
+| ISGT {}
+| ISLEQ {}
+| ISGEQ {}
+| ISEQ {}
+/* 
+comp :  ISLT {printf("ISLT\n");}
+| ISGT {printf("ISGT\n");}
+| ISLEQ {printf("ISLEQ\n");}
+| ISGEQ {printf("ISGEQ\n");}
+| ISEQ {printf("ISEQ\n");} */
 ;
 
 %% 
