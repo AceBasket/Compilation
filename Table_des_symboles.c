@@ -68,7 +68,6 @@ symb_value_type set_symbol_value(sid symb_id,symb_value_type value) {
 	/* otherwise insert it at head of storage with proper value */
 	
 	tracker = malloc(sizeof(elem));
-    printf("malloc effectué\n");
 	tracker -> symbol_name = symb_id;
 	tracker -> symbol_value = value;
 	tracker -> next = storage;

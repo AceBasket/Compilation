@@ -77,7 +77,7 @@ let_def : def_id
 | def_fun
 ;
 
-def_id : LET ID EQ exp  {set_symbol_value($2,$4); printf("/* Valeur de %s stockée à fd+%d*/\n",$2,*$2);}
+def_id : LET ID EQ exp  {set_symbol_value($2,$4); printf("/* Valeur de %s stockée à fp+%d*/\n",$2,*$2);}
 // creer un offset/ le stocker dans la table des symboles/ 
 ; // lorsqu'on utilise la variable il faut aller lire l'adresse dans la table des symboles
 // fp = frame pointer / sp = stack pointer
@@ -97,10 +97,10 @@ exp : arith_exp {}
 ;
 
 arith_exp : MOINS arith_exp %prec UNA {}
-| arith_exp MOINS arith_exp {$$ = $1-$3;printf("(%d) SUBI\n",$1-$3);}
-| arith_exp PLUS arith_exp {$$ = $1+$3;printf("(%d) ADDI\n",$1+$3);}
-| arith_exp DIV arith_exp {$$ = $1/$3;printf("(%d) DIVI\n",$1/$3);}
-| arith_exp MULT arith_exp {$$ = $1*$3;printf("(%d) MULTI\n",$1*$3);}
+| arith_exp MOINS arith_exp {printf("SUBI\n");}
+| arith_exp PLUS arith_exp {printf("ADDI\n");}
+| arith_exp DIV arith_exp {printf("DIVI\n");}
+| arith_exp MULT arith_exp {printf("MULTI\n");}
 | arith_exp CONCAT arith_exp {printf("concat\n");}
 | atom_exp {}
 ;
@@ -108,10 +108,10 @@ arith_exp : MOINS arith_exp %prec UNA {}
 atom_exp : NUM { printf("LOADI %d\n", $1);}
 | FLOAT {}//{printf("float\n");}
 | STRING {}//{printf("string\n");}
-| ID { $$ = get_symbol_value($1); printf("LOAD (fp+%d)\n", *$1);} 
+| ID {printf("LOAD (fp+%d)\n", *$1);} 
 | control_exp {}                                           
 | funcall_exp {}
-| LPAR exp RPAR {$$ = $2;printf("Parentheses appellees\n");}
+| LPAR exp RPAR {printf("Parentheses appellees\n");}
 ;
 
 control_exp : if_exp

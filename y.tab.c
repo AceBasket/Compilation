@@ -1312,7 +1312,7 @@ yyreduce:
 
   case 8: /* def_id: LET ID EQ exp  */
 #line 80 "myml.y"
-                        {set_symbol_value((yyvsp[-2].val_string),(yyvsp[0].val_int)); printf("/* Valeur de %s stockée à fd+%d*/\n",(yyvsp[-2].val_string),*(yyvsp[-2].val_string));}
+                        {set_symbol_value((yyvsp[-2].val_string),(yyvsp[0].val_int)); printf("/* Valeur de %s stockée à fp+%d*/\n",(yyvsp[-2].val_string),*(yyvsp[-2].val_string));}
 #line 1317 "y.tab.c"
     break;
 
@@ -1342,25 +1342,25 @@ yyreduce:
 
   case 16: /* arith_exp: arith_exp MOINS arith_exp  */
 #line 100 "myml.y"
-                            {(yyval.val_int) = (yyvsp[-2].val_int)-(yyvsp[0].val_int);printf("(%d) SUBI\n",(yyvsp[-2].val_int)-(yyvsp[0].val_int));}
+                            {printf("SUBI\n");}
 #line 1347 "y.tab.c"
     break;
 
   case 17: /* arith_exp: arith_exp PLUS arith_exp  */
 #line 101 "myml.y"
-                           {(yyval.val_int) = (yyvsp[-2].val_int)+(yyvsp[0].val_int);printf("(%d) ADDI\n",(yyvsp[-2].val_int)+(yyvsp[0].val_int));}
+                           {printf("ADDI\n");}
 #line 1353 "y.tab.c"
     break;
 
   case 18: /* arith_exp: arith_exp DIV arith_exp  */
 #line 102 "myml.y"
-                          {(yyval.val_int) = (yyvsp[-2].val_int)/(yyvsp[0].val_int);printf("(%d) DIVI\n",(yyvsp[-2].val_int)/(yyvsp[0].val_int));}
+                          {printf("DIVI\n");}
 #line 1359 "y.tab.c"
     break;
 
   case 19: /* arith_exp: arith_exp MULT arith_exp  */
 #line 103 "myml.y"
-                           {(yyval.val_int) = (yyvsp[-2].val_int)*(yyvsp[0].val_int);printf("(%d) MULTI\n",(yyvsp[-2].val_int)*(yyvsp[0].val_int));}
+                           {printf("MULTI\n");}
 #line 1365 "y.tab.c"
     break;
 
@@ -1396,7 +1396,7 @@ yyreduce:
 
   case 25: /* atom_exp: ID  */
 #line 111 "myml.y"
-     { (yyval.val_int) = get_symbol_value((yyvsp[0].val_string)); printf("LOAD (fp+%d)\n", *(yyvsp[0].val_string));}
+     {printf("LOAD (fp+%d)\n", *(yyvsp[0].val_string));}
 #line 1401 "y.tab.c"
     break;
 
@@ -1414,7 +1414,7 @@ yyreduce:
 
   case 28: /* atom_exp: LPAR exp RPAR  */
 #line 114 "myml.y"
-                {(yyval.val_int) = (yyvsp[-1].val_int);printf("Parentheses appellees\n");}
+                {printf("Parentheses appellees\n");}
 #line 1419 "y.tab.c"
     break;
 
