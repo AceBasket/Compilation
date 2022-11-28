@@ -81,7 +81,7 @@ FILE * file_out = NULL;
   
 extern int yylex();
 extern int yyparse();
-
+int offset = 0;
 void yyerror (char* s) {
    printf("\n%s\n",s);
  }
@@ -202,7 +202,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 22 "myml.y"
+#line 24 "myml.y"
 
   int val_int;
   char* val_string;
@@ -670,12 +670,12 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    64,    64,    66,    71,    72,    77,    78,    81,    85,
-      88,    91,    92,    96,    97,   100,   101,   102,   103,   104,
-     105,   106,   109,   110,   111,   112,   113,   114,   115,   118,
-     122,   125,   126,   127,   128,   131,   132,   135,   138,   139,
-     142,   143,   144,   145,   146,   147,   151,   152,   153,   154,
-     155
+       0,    66,    66,    68,    73,    74,    79,    80,    83,    87,
+      90,    93,    94,    98,    99,   102,   103,   104,   105,   106,
+     107,   108,   111,   112,   113,   114,   115,   116,   117,   120,
+     124,   127,   128,   129,   130,   133,   134,   137,   140,   141,
+     144,   145,   146,   147,   148,   149,   153,   154,   155,   156,
+     157
 };
 #endif
 
@@ -1299,199 +1299,205 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* prog: inst PV  */
-#line 64 "myml.y"
+#line 66 "myml.y"
                {printf("/* fin d'une instruction */\n");}
 #line 1305 "y.tab.c"
     break;
 
   case 3: /* prog: prog inst PV  */
-#line 66 "myml.y"
+#line 68 "myml.y"
                {printf("/* fin d'une autre instruction */\n");}
 #line 1311 "y.tab.c"
     break;
 
   case 5: /* inst: exp  */
-#line 72 "myml.y"
+#line 74 "myml.y"
       {printf("DROP\n/* dropping useless value */");}
 #line 1317 "y.tab.c"
     break;
 
   case 8: /* def_id: LET ID EQ exp  */
-#line 81 "myml.y"
-                        {set_symbol_value((yyvsp[-2].val_string),(yyvsp[0].val_int)); printf("/* Value of %s stored at stack index fp+%d*/\n",(yyvsp[-2].val_string),*(yyvsp[-2].val_string));}
+#line 83 "myml.y"
+                        {add_symbol_value((yyvsp[-2].val_string),offset); printf("/* Value of %s stored at stack index fp+%d*/\n",(yyvsp[-2].val_string),offset++);}
 #line 1323 "y.tab.c"
     break;
 
   case 9: /* def_fun: LET fun_head EQ exp  */
-#line 85 "myml.y"
+#line 87 "myml.y"
                               {printf("Une définition de fonction\n");}
 #line 1329 "y.tab.c"
     break;
 
   case 13: /* exp: arith_exp  */
-#line 96 "myml.y"
+#line 98 "myml.y"
                 {}
 #line 1335 "y.tab.c"
     break;
 
   case 14: /* exp: let_exp  */
-#line 97 "myml.y"
+#line 99 "myml.y"
           {printf("local symbol\n");}
 #line 1341 "y.tab.c"
     break;
 
   case 15: /* arith_exp: MOINS arith_exp  */
-#line 100 "myml.y"
+#line 102 "myml.y"
                                       {}
 #line 1347 "y.tab.c"
     break;
 
   case 16: /* arith_exp: arith_exp MOINS arith_exp  */
-#line 101 "myml.y"
+#line 103 "myml.y"
                             {printf("SUBI\n");}
 #line 1353 "y.tab.c"
     break;
 
   case 17: /* arith_exp: arith_exp PLUS arith_exp  */
-#line 102 "myml.y"
+#line 104 "myml.y"
                            {printf("ADDI\n");}
 #line 1359 "y.tab.c"
     break;
 
   case 18: /* arith_exp: arith_exp DIV arith_exp  */
-#line 103 "myml.y"
+#line 105 "myml.y"
                           {printf("DIVI\n");}
 #line 1365 "y.tab.c"
     break;
 
   case 19: /* arith_exp: arith_exp MULT arith_exp  */
-#line 104 "myml.y"
+#line 106 "myml.y"
                            {printf("MULTI\n");}
 #line 1371 "y.tab.c"
     break;
 
   case 20: /* arith_exp: arith_exp CONCAT arith_exp  */
-#line 105 "myml.y"
+#line 107 "myml.y"
                              {printf("concat\n");}
 #line 1377 "y.tab.c"
     break;
 
   case 21: /* arith_exp: atom_exp  */
-#line 106 "myml.y"
+#line 108 "myml.y"
            {}
 #line 1383 "y.tab.c"
     break;
 
   case 22: /* atom_exp: NUM  */
-#line 109 "myml.y"
+#line 111 "myml.y"
                {printf("LOADI %d\n", (yyvsp[0].val_int));}
 #line 1389 "y.tab.c"
     break;
 
   case 23: /* atom_exp: FLOAT  */
-#line 110 "myml.y"
+#line 112 "myml.y"
         {}
 #line 1395 "y.tab.c"
     break;
 
   case 24: /* atom_exp: STRING  */
-#line 111 "myml.y"
+#line 113 "myml.y"
          {}
 #line 1401 "y.tab.c"
     break;
 
   case 25: /* atom_exp: ID  */
-#line 112 "myml.y"
-     {printf("LOAD (fp+%d)\n /*Loading %s at stack index fp + %d*/\n", *(yyvsp[0].val_string), (yyvsp[0].val_string), *(yyvsp[0].val_string));}
+#line 114 "myml.y"
+     {printf("LOAD (fp+%d)\n /*Loading %s at stack index fp + %d*/\n", get_symbol_value((yyvsp[0].val_string)), (yyvsp[0].val_string), get_symbol_value((yyvsp[0].val_string)));}
 #line 1407 "y.tab.c"
     break;
 
   case 26: /* atom_exp: control_exp  */
-#line 113 "myml.y"
+#line 115 "myml.y"
               {}
 #line 1413 "y.tab.c"
     break;
 
   case 27: /* atom_exp: funcall_exp  */
-#line 114 "myml.y"
+#line 116 "myml.y"
               {}
 #line 1419 "y.tab.c"
     break;
 
   case 28: /* atom_exp: LPAR exp RPAR  */
-#line 115 "myml.y"
+#line 117 "myml.y"
                 {}
 #line 1425 "y.tab.c"
     break;
 
-  case 31: /* if: IF  */
-#line 125 "myml.y"
-        {}
+  case 30: /* if_exp: if cond then atom_exp else atom_exp  */
+#line 124 "myml.y"
+                                             {printf("L1:\n /*End if-then-else */\n ");}
 #line 1431 "y.tab.c"
     break;
 
-  case 32: /* cond: LPAR bool RPAR  */
-#line 126 "myml.y"
-                      {}
+  case 31: /* if: IF  */
+#line 127 "myml.y"
+        {}
 #line 1437 "y.tab.c"
     break;
 
-  case 33: /* then: THEN  */
-#line 127 "myml.y"
-            {}
+  case 32: /* cond: LPAR bool RPAR  */
+#line 128 "myml.y"
+                      {}
 #line 1443 "y.tab.c"
     break;
 
-  case 34: /* else: ELSE  */
-#line 128 "myml.y"
-            {}
+  case 33: /* then: THEN  */
+#line 129 "myml.y"
+            {printf("IFN L0\n /* negation condition tested*/\n /*case true*/");}
 #line 1449 "y.tab.c"
     break;
 
-  case 35: /* let_exp: let_def IN atom_exp  */
-#line 131 "myml.y"
-                              {printf("DRCP\n");}
+  case 34: /* else: ELSE  */
+#line 130 "myml.y"
+            {printf("GOTO L1\n /* case false*/\n L0:");}
 #line 1455 "y.tab.c"
     break;
 
-  case 44: /* bool: exp comp exp  */
-#line 146 "myml.y"
-               {printf("%s\n", (yyvsp[-1].val_string));}
+  case 35: /* let_exp: let_def IN atom_exp  */
+#line 133 "myml.y"
+                              {delete_symbol_value(); offset--; printf("DRCP\n");}
 #line 1461 "y.tab.c"
     break;
 
-  case 46: /* comp: ISLT  */
-#line 151 "myml.y"
-             {(yyval.val_string)=(yyvsp[0].val_string);}
+  case 44: /* bool: exp comp exp  */
+#line 148 "myml.y"
+               {printf("%s\n", (yyvsp[-1].val_string));}
 #line 1467 "y.tab.c"
     break;
 
-  case 47: /* comp: ISGT  */
-#line 152 "myml.y"
-       {(yyval.val_string)=(yyvsp[0].val_string);}
+  case 46: /* comp: ISLT  */
+#line 153 "myml.y"
+             {(yyval.val_string) = "LT";}
 #line 1473 "y.tab.c"
     break;
 
-  case 48: /* comp: ISLEQ  */
-#line 153 "myml.y"
-        {(yyval.val_string)=(yyvsp[0].val_string);}
+  case 47: /* comp: ISGT  */
+#line 154 "myml.y"
+       {(yyval.val_string) = "GT";}
 #line 1479 "y.tab.c"
     break;
 
-  case 49: /* comp: ISGEQ  */
-#line 154 "myml.y"
-        {(yyval.val_string)=(yyvsp[0].val_string);}
+  case 48: /* comp: ISLEQ  */
+#line 155 "myml.y"
+        {(yyval.val_string) = "LEQ";}
 #line 1485 "y.tab.c"
     break;
 
-  case 50: /* comp: ISEQ  */
-#line 155 "myml.y"
-       {(yyval.val_string)=(yyvsp[0].val_string);}
+  case 49: /* comp: ISGEQ  */
+#line 156 "myml.y"
+        {(yyval.val_string) = "GEQ";}
 #line 1491 "y.tab.c"
     break;
 
+  case 50: /* comp: ISEQ  */
+#line 157 "myml.y"
+       {(yyval.val_string) = "EQ";}
+#line 1497 "y.tab.c"
+    break;
 
-#line 1495 "y.tab.c"
+
+#line 1501 "y.tab.c"
 
       default: break;
     }
@@ -1684,7 +1690,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 164 "myml.y"
+#line 166 "myml.y"
  
 int main () {
     /* The code below is just a standard usage example.

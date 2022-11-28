@@ -103,17 +103,14 @@ symb_value_type add_symbol_value(sid symb_id,symb_value_type value) {
 	return storage -> symbol_value;
 }
 
-symb_value_type delete_symbol_value(sid symb_id) {
+
+/* delete the head*/
+symb_value_type delete_symbol_value() {
 	elem * tracker=storage;
-	elem * trackerdel;
-	/* look into the linked list for the symbol value */
-	while (tracker) {
-		if (tracker -> symbol_name == symb_id) 
-            trackerdel = tracker; 
-		tracker = tracker -> next;
-	}
-	free(trackerdel);
+	storage = tracker->next;
+	free(tracker);
 }
+
 void free_symbols() {
     elem *e = storage;
     while (e != storage )
