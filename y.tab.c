@@ -670,12 +670,12 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    63,    63,    65,    70,    71,    76,    77,    80,    85,
-      88,    91,    92,    96,    97,   100,   101,   102,   103,   104,
-     105,   106,   109,   110,   111,   112,   113,   114,   115,   118,
-     122,   125,   126,   127,   128,   131,   132,   135,   138,   139,
-     142,   143,   144,   145,   146,   147,   151,   151,   151,   151,
-     151
+       0,    63,    63,    65,    70,    71,    76,    77,    80,    84,
+      87,    90,    91,    95,    96,    99,   100,   101,   102,   103,
+     104,   105,   108,   109,   110,   111,   112,   113,   114,   117,
+     121,   124,   125,   126,   127,   130,   131,   134,   137,   138,
+     141,   142,   143,   144,   145,   146,   150,   150,   150,   150,
+     150
 };
 #endif
 
@@ -1317,127 +1317,127 @@ yyreduce:
     break;
 
   case 9: /* def_fun: LET fun_head EQ exp  */
-#line 85 "myml.y"
+#line 84 "myml.y"
                               {printf("Une définition de fonction\n");}
 #line 1323 "y.tab.c"
     break;
 
   case 13: /* exp: arith_exp  */
-#line 96 "myml.y"
+#line 95 "myml.y"
                 {}
 #line 1329 "y.tab.c"
     break;
 
   case 14: /* exp: let_exp  */
-#line 97 "myml.y"
+#line 96 "myml.y"
           {}
 #line 1335 "y.tab.c"
     break;
 
   case 15: /* arith_exp: MOINS arith_exp  */
-#line 100 "myml.y"
+#line 99 "myml.y"
                                       {}
 #line 1341 "y.tab.c"
     break;
 
   case 16: /* arith_exp: arith_exp MOINS arith_exp  */
-#line 101 "myml.y"
+#line 100 "myml.y"
                             {(yyval.val_int) = (yyvsp[-2].val_int)-(yyvsp[0].val_int);printf("(%d) SUBI\n",(yyvsp[-2].val_int)-(yyvsp[0].val_int));}
 #line 1347 "y.tab.c"
     break;
 
   case 17: /* arith_exp: arith_exp PLUS arith_exp  */
-#line 102 "myml.y"
+#line 101 "myml.y"
                            {(yyval.val_int) = (yyvsp[-2].val_int)+(yyvsp[0].val_int);printf("(%d) ADDI\n",(yyvsp[-2].val_int)+(yyvsp[0].val_int));}
 #line 1353 "y.tab.c"
     break;
 
   case 18: /* arith_exp: arith_exp DIV arith_exp  */
-#line 103 "myml.y"
+#line 102 "myml.y"
                           {(yyval.val_int) = (yyvsp[-2].val_int)/(yyvsp[0].val_int);printf("(%d) DIVI\n",(yyvsp[-2].val_int)/(yyvsp[0].val_int));}
 #line 1359 "y.tab.c"
     break;
 
   case 19: /* arith_exp: arith_exp MULT arith_exp  */
-#line 104 "myml.y"
+#line 103 "myml.y"
                            {(yyval.val_int) = (yyvsp[-2].val_int)*(yyvsp[0].val_int);printf("(%d) MULTI\n",(yyvsp[-2].val_int)*(yyvsp[0].val_int));}
 #line 1365 "y.tab.c"
     break;
 
   case 20: /* arith_exp: arith_exp CONCAT arith_exp  */
-#line 105 "myml.y"
+#line 104 "myml.y"
                              {printf("concat\n");}
 #line 1371 "y.tab.c"
     break;
 
   case 21: /* arith_exp: atom_exp  */
-#line 106 "myml.y"
+#line 105 "myml.y"
            {}
 #line 1377 "y.tab.c"
     break;
 
   case 22: /* atom_exp: NUM  */
-#line 109 "myml.y"
+#line 108 "myml.y"
                { printf("LOADI %d\n", (yyvsp[0].val_int));}
 #line 1383 "y.tab.c"
     break;
 
   case 23: /* atom_exp: FLOAT  */
-#line 110 "myml.y"
+#line 109 "myml.y"
         {}
 #line 1389 "y.tab.c"
     break;
 
   case 24: /* atom_exp: STRING  */
-#line 111 "myml.y"
+#line 110 "myml.y"
          {}
 #line 1395 "y.tab.c"
     break;
 
   case 25: /* atom_exp: ID  */
-#line 112 "myml.y"
-     { (yyval.val_int) = get_symbol_value((yyvsp[0].val_string)); printf("LOADI (fp+%d)\n", *(yyvsp[0].val_string));}
+#line 111 "myml.y"
+     { (yyval.val_int) = get_symbol_value((yyvsp[0].val_string)); printf("LOAD (fp+%d)\n", *(yyvsp[0].val_string));}
 #line 1401 "y.tab.c"
     break;
 
   case 26: /* atom_exp: control_exp  */
-#line 113 "myml.y"
+#line 112 "myml.y"
               {}
 #line 1407 "y.tab.c"
     break;
 
   case 27: /* atom_exp: funcall_exp  */
-#line 114 "myml.y"
+#line 113 "myml.y"
               {}
 #line 1413 "y.tab.c"
     break;
 
   case 28: /* atom_exp: LPAR exp RPAR  */
-#line 115 "myml.y"
+#line 114 "myml.y"
                 {(yyval.val_int) = (yyvsp[-1].val_int);printf("Parentheses appellees\n");}
 #line 1419 "y.tab.c"
     break;
 
   case 31: /* if: IF  */
-#line 125 "myml.y"
+#line 124 "myml.y"
         {printf("if\n");}
 #line 1425 "y.tab.c"
     break;
 
   case 32: /* cond: LPAR bool RPAR  */
-#line 126 "myml.y"
+#line 125 "myml.y"
                       {printf("(\n");}
 #line 1431 "y.tab.c"
     break;
 
   case 33: /* then: THEN  */
-#line 127 "myml.y"
+#line 126 "myml.y"
             {printf("then\n");}
 #line 1437 "y.tab.c"
     break;
 
   case 34: /* else: ELSE  */
-#line 128 "myml.y"
+#line 127 "myml.y"
             {printf("else\n");}
 #line 1443 "y.tab.c"
     break;
@@ -1636,7 +1636,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 154 "myml.y"
+#line 153 "myml.y"
  
 int main () {
     /* The code below is just a standard usage example.

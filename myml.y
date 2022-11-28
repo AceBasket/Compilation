@@ -77,8 +77,7 @@ let_def : def_id
 | def_fun
 ;
 
-def_id : LET ID EQ exp  {set_symbol_value($2,$4); printf("/* Valeur de %s stockée à fd+%d*/\n",$2,*$2);} // return de get_symbol_value() de type symb_value_type
-                                                                                                        // mais dans quelle variable le mettre ?
+def_id : LET ID EQ exp  {set_symbol_value($2,$4); printf("/* Valeur de %s stockée à fd+%d*/\n",$2,*$2);}
 // creer un offset/ le stocker dans la table des symboles/ 
 ; // lorsqu'on utilise la variable il faut aller lire l'adresse dans la table des symboles
 // fp = frame pointer / sp = stack pointer
@@ -109,8 +108,8 @@ arith_exp : MOINS arith_exp %prec UNA {}
 atom_exp : NUM { printf("LOADI %d\n", $1);}
 | FLOAT {}//{printf("float\n");}
 | STRING {}//{printf("string\n");}
-| ID { $$ = get_symbol_value($1); printf("LOAD (fp+%d)\n", *$1);} // return de get_symbol_value() de type symb_value_type
-| control_exp {}                                           // Mais dans quoi le mettre ???
+| ID { $$ = get_symbol_value($1); printf("LOAD (fp+%d)\n", *$1);} 
+| control_exp {}                                           
 | funcall_exp {}
 | LPAR exp RPAR {$$ = $2;printf("Parentheses appellees\n");}
 ;
