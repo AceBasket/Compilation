@@ -15,7 +15,9 @@ extern int yyparse();
 
 int offset = 0;
 int label_number = 0;
-int nb_if =0;
+int nb_if = 0;
+int arg_nb = 1;
+int fp = 0;
 
 void yyerror (char* s) {
    printf("\n%s\n",s);
@@ -70,15 +72,15 @@ void yyerror (char* s) {
 
  /* a program is a list of instruction */
 
-prog : inst PV {printf("/* fin d'une instruction */\n");}
+prog : inst PV {printf("/* Fin d'une instruction */\n\n");}
 
-| prog inst PV {printf("/* fin d'une autre instruction */\n");}
+| prog inst PV {printf("/* Fin d'une autre instruction */\n\n");}
 ;
 
 /* a instruction is either a value or a definition (that indeed looks like an affectation) */
 
 inst : let_def
-| exp {printf("DROP\n/* dropping useless value */");}
+| exp {printf("DROP\n/* Dropping useless value */\n");}
 ;
 
 
@@ -88,9 +90,7 @@ let_def : def_id
 ;
 
 def_id : LET ID EQ exp  {add_symbol_value($2,offset); printf("/* Value of %s stored at stack index fp+%d */\n",$2,offset++);}
-// creer un offset/ le stocker dans la table des symboles/ 
-; // lorsqu'on utilise la variable il faut aller lire l'adresse dans la table des symboles
-// fp = frame pointer / sp = stack pointer
+;
 def_fun : LET fun_head EQ exp {printf("Une définition de fonction\n");}
 ;
 
@@ -118,9 +118,9 @@ arith_exp : MOINS arith_exp %prec UNA {}
 atom_exp : NUM {printf("LOADI %d\n", $1);}
 | FLOAT {}//{printf("float\n");}
 | STRING {}//{printf("string\n");}
-| ID {printf("LOAD (fp+%d)\n /* Loading %s at stack index fp + %d */\n", get_symbol_value($1), $1, get_symbol_value($1));} 
+| ID {printf("LOAD (fp+%d)\n/* Loading %s at stack index fp + %d */\n", get_symbol_value($1), $1, get_symbol_value($1));} 
 | control_exp {}                                           
-| funcall_exp {}
+| funcall_exp {offset = fp; printf("/* Restoring P-stack, with returned value added */\nRESTORE %d\n", offset );} 
 | LPAR exp RPAR {}
 ;
 
@@ -128,36 +128,33 @@ control_exp : if_exp {}
 ;
 
 
-if_exp : if cond then atom_exp else atom_exp { printf("L%d:\n/* End if-then-else */\n",label_number+1);label_number = label_number - (2*(nb_if-1));}
+if_exp : if cond then atom_exp else atom_exp {printf("L%d:\n/* End if-then-else */\n",label_number+1);label_number = label_number - (2*(nb_if-1));}
 ;
 /* Comment numeroter les labels ?
-mettre des %d dans les printf des IFN  et GOTO
-IF {$$ = nvl_int();}; // nvl_int = make_Num() ??
-THEN {$$ = $<inf_int>-1;}; //$$ = attribut que pour le if
-ELSE {$$ = $<inf_int>-1;} //$$ = meme attribut que pour le then 
-label du else (LE) pair 
-label du court_circuit du else (LCCE) impair
 
-pour en creer des nouveaux prendre le label L: 
-  nouveau LE = 2*L
-  nouveau LCCE = 2*L+1 
-let z = if (x > 1) then if (y>3) then 0 else 1 else if (y<5) then 2 else 3;
+Chaque if correspond a un multiple de 2 différents
+Ajouter 2 au label_number à chque ouverture de if, et incrementer le compteur de if (nb_if)
+A la fin d'une boucle if: décrémenter correctement le label_number ( actuellement retire 2*(nb_if-1) )
 */
 if : IF {label_number = 2*nb_if; nb_if = nb_if +1; $$ = label_number;}; 
 cond : LPAR bool RPAR {}; 
-then : THEN {$$ = $<val_int>-1; printf("IFN L%d\n/* negation condition tested */\n/* case true */\n",label_number);}; 
-else : ELSE {$$ = $<val_int>-1; printf("GOTO L%d\n/* case false */\nL%d:\n",label_number+1,label_number);}; 
+then : THEN {$$ = $<val_int>-1; printf("IFN L%d\n/* Negation condition tested */\n/* case true */\n",label_number);}; 
+else : ELSE {$$ = $<val_int>-1; printf("GOTO L%d\n/* Case false */\nL%d:\n",label_number+1,label_number);}; 
 
 
 let_exp : let_def IN atom_exp {delete_symbol_value(); offset--; printf("DRCP\n");}
 | let_def IN let_exp
 ;
 
-funcall_exp : ID LPAR arg_list RPAR
+funcall_exp : ID LPAR save_exp arg_list RPAR {printf("CALL call_%s\n", $1); arg_nb = 1;}
 ;
 
-arg_list : arith_exp
-| arg_list VIR  arith_exp
+save_exp: {printf("/* Preparing %d call with %d argument(s) */\nSAVEFP\n",$<val_int>-2, arg_nb); fp = offset;} 
+// valeur de fp a initialiser à offset lors du printf SAVEFP
+;
+
+arg_list : arith_exp {printf("/* Argument %d loaded */\n",arg_nb); arg_nb++;}
+| arg_list VIR  arith_exp {printf("/* Argument %d loaded */\n",arg_nb); arg_nb++;}
 ;
 
 bool : BOOL
@@ -174,12 +171,6 @@ comp :  ISLT {$$ = "LT";}
 | ISLEQ {$$ = "LEQ";}
 | ISGEQ {$$ = "GEQ";}
 | ISEQ {$$ = "EQ";}
-/* 
-comp :  ISLT {printf("ISLT\n");}
-| ISGT {printf("ISGT\n");}
-| ISLEQ {printf("ISLEQ\n");}
-| ISGEQ {printf("ISGEQ\n");}
-| ISEQ {printf("ISEQ\n");} */
 ;
 
 %% 
@@ -197,16 +188,16 @@ int main () {
     stdout = file_out;  */
 
     /* openng source code file and redirecting stdin from it */
-    /* file_in = fopen("test.ml","r"); */
-    /* stdin = file_in;  */
+    /* file_in = fopen("test5.ml","r"); 
+    stdin = file_in;  */
 
     /* As a starter, one may comment the above line for usual stdin as input */
 
     yyparse();
 
     /* any open file shall be closed */
-    /* fclose(file_out); */
-    /* fclose(file_in); */
+    /* fclose(file_out);
+    fclose(file_in); */
  
     return 1;
 } 
