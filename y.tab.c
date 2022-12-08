@@ -78,6 +78,7 @@
 
 FILE * file_in = NULL;
 FILE * file_out = NULL;
+FILE * file_out_function = NULL;
   
 extern int yylex();
 extern int yyparse();
@@ -87,13 +88,15 @@ int label_number = 0;
 int nb_if = 0;
 int arg_nb = 1;
 int fp = 0;
+// char *func_name = "";
+
 
 void yyerror (char* s) {
    printf("\n%s\n",s);
  }
 
 
-#line 97 "y.tab.c"
+#line 100 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -208,13 +211,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 30 "myml.y"
+#line 33 "myml.y"
 
   int val_int;
   char* val_string;
   float val_float;
 
-#line 218 "y.tab.c"
+#line 221 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -285,7 +288,7 @@ enum yysymbol_kind_t
   YYSYMBOL_else = 48,                      /* else  */
   YYSYMBOL_let_exp = 49,                   /* let_exp  */
   YYSYMBOL_funcall_exp = 50,               /* funcall_exp  */
-  YYSYMBOL_test_exp = 51,                  /* test_exp  */
+  YYSYMBOL_fid = 51,                       /* fid  */
   YYSYMBOL_arg_list = 52,                  /* arg_list  */
   YYSYMBOL_bool = 53,                      /* bool  */
   YYSYMBOL_comp = 54                       /* comp  */
@@ -677,12 +680,12 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    75,    75,    77,    82,    83,    88,    89,    92,    96,
-      99,   102,   103,   107,   108,   111,   112,   113,   114,   115,
-     116,   117,   123,   124,   125,   126,   127,   128,   129,   132,
-     136,   151,   152,   153,   154,   157,   158,   161,   164,   167,
-     168,   171,   172,   173,   174,   175,   176,   180,   181,   182,
-     183,   184
+       0,    82,    82,    84,    89,    90,    95,    96,    99,   101,
+     104,   108,   110,   114,   115,   118,   119,   120,   121,   122,
+     123,   124,   127,   128,   129,   130,   131,   132,   133,   136,
+     140,   148,   149,   150,   151,   154,   155,   158,   161,   164,
+     165,   168,   169,   170,   171,   172,   173,   177,   178,   179,
+     180,   181
 };
 #endif
 
@@ -704,7 +707,7 @@ static const char *const yytname[] =
   "PLUS", "MOINS", "MULT", "DIV", "EQ", "CONCAT", "UNA", "$accept", "prog",
   "inst", "let_def", "def_id", "def_fun", "fun_head", "id_list", "exp",
   "arith_exp", "atom_exp", "control_exp", "if_exp", "if", "cond", "then",
-  "else", "let_exp", "funcall_exp", "test_exp", "arg_list", "bool", "comp", YY_NULLPTR
+  "else", "let_exp", "funcall_exp", "fid", "arg_list", "bool", "comp", YY_NULLPTR
 };
 
 static const char *
@@ -719,7 +722,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
 
-#define YYTABLE_NINF (-1)
+#define YYTABLE_NINF (-39)
 
 #define yytable_value_is_error(Yyn) \
   0
@@ -730,13 +733,13 @@ static const yytype_int8 yypact[] =
 {
       71,   -32,   -32,    -4,   -32,    71,     3,   -32,    57,     7,
        9,    23,   -32,   -32,   -32,    83,   -32,   -32,   -32,     6,
-     -32,   -32,   -32,    23,    26,    -6,    21,   -32,   -32,    61,
-     -32,    88,    57,    57,    57,    57,    57,    43,    50,    57,
-     -32,    66,    71,    71,   -32,   -32,   -32,    11,    11,    52,
-      52,   -32,    43,    43,   -32,    98,    -3,   -32,    99,    83,
+     -32,   -32,    27,    23,    41,    -6,    35,   -32,   -32,    61,
+     -32,    88,    57,    57,    57,    57,    57,    43,    66,    57,
+     -32,    77,    71,    71,   -32,   -32,   -32,    11,    11,    60,
+      60,   -32,    43,    43,   -32,    98,    -3,   -32,    99,    83,
       45,   -32,    46,   -32,   -32,    69,    15,   -32,   -32,   -32,
-     -32,   -32,   -32,    71,   -32,    43,    43,    65,   -32,    57,
-     -32,    85,   -32,   -32,   -32,    74,   -32,    99,    83,   -32,
+     -32,   -32,   -32,    71,   -32,    43,    43,    56,   -32,    57,
+     -32,    90,   -32,   -32,   -32,    78,   -32,    99,    83,   -32,
      -32
 };
 
@@ -747,7 +750,7 @@ static const yytype_int8 yydefact[] =
 {
        0,    22,    23,    25,    24,     0,     0,    31,     0,     0,
        0,     4,     6,     7,     5,    13,    21,    26,    29,     0,
-      14,    27,    38,     0,     0,     0,     0,    15,     1,     0,
+      14,    27,     0,     0,     0,     0,     0,    15,     1,     0,
        2,     0,     0,     0,     0,     0,     0,     0,     0,     0,
       28,     0,     0,     0,     3,    35,    36,    17,    16,    19,
       18,    20,     0,     0,    41,     0,     0,    33,     0,    39,
@@ -760,7 +763,7 @@ static const yytype_int8 yydefact[] =
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -32,   -32,    90,    31,   -32,   -32,   -32,   -32,     0,    -7,
+     -32,   -32,    91,    31,   -32,   -32,   -32,   -32,     0,    -7,
      -28,   -32,   -32,   -32,   -32,   -32,   -32,    75,   -32,   -32,
      -32,   -31,   -32
 };
@@ -769,7 +772,7 @@ static const yytype_int8 yypgoto[] =
 static const yytype_int8 yydefgoto[] =
 {
        0,     9,    10,    23,    12,    13,    26,    62,    55,    15,
-      16,    17,    18,    19,    38,    58,    87,    20,    21,    39,
+      16,    17,    18,    19,    38,    58,    87,    20,    21,    22,
       60,    56,    73
 };
 
@@ -778,17 +781,17 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      14,    27,    41,    45,    22,    24,    74,    28,    25,    14,
+      14,    27,    41,    45,   -38,    24,    74,    28,    25,    14,
        1,     2,     3,     4,    37,     5,    30,     6,    75,    76,
        7,    66,    67,    42,    82,    47,    48,    49,    50,    51,
-      77,    11,    59,     8,    31,    40,    75,    76,    34,    35,
+      77,    11,    59,     8,    31,    39,    75,    76,    34,    35,
       11,    36,    63,    64,    84,    85,     1,     2,     3,     4,
-      43,    52,    65,     6,    78,    80,     7,    79,    81,    90,
-       1,     2,     3,     4,    57,     5,    53,    54,    44,     8,
-       7,    61,    88,    83,     1,     2,     3,     4,    40,     5,
-      86,     6,    36,     8,     7,    68,    69,    70,    71,    72,
-      89,     1,     2,     3,     4,    75,     5,     8,     6,    29,
-       0,     7,     1,     2,     3,     4,    46,     5,    32,    33,
+      40,    52,    65,     6,    78,    80,     7,    79,    81,    90,
+       1,     2,     3,     4,    43,     5,    53,    54,    44,     8,
+       7,    86,    88,    83,     1,     2,     3,     4,    40,     5,
+      57,     6,    61,     8,     7,    68,    69,    70,    71,    72,
+      36,     1,     2,     3,     4,    89,     5,     8,     6,    75,
+      29,     7,     1,     2,     3,     4,    46,     5,    32,    33,
       34,    35,     7,    36,    68,    69,    70,    71,    72
 };
 
@@ -797,14 +800,14 @@ static const yytype_int8 yycheck[] =
        0,     8,     8,    31,     8,     5,     9,     0,     5,     9,
        3,     4,     5,     6,     8,     8,     7,    10,    21,    22,
       13,    52,    53,    29,     9,    32,    33,    34,    35,    36,
-      58,     0,    39,    26,    11,     9,    21,    22,    27,    28,
+      58,     0,    39,    26,    11,     8,    21,    22,    27,    28,
        9,    30,    42,    43,    75,    76,     3,     4,     5,     6,
-      29,     8,    52,    10,     9,     9,    13,    12,    12,    87,
-       3,     4,     5,     6,    14,     8,    23,    24,     7,    26,
-      13,     5,    79,    73,     3,     4,     5,     6,     9,     8,
-      15,    10,    30,    26,    13,    16,    17,    18,    19,    20,
-       5,     3,     4,     5,     6,    21,     8,    26,    10,     9,
-      -1,    13,     3,     4,     5,     6,    31,     8,    25,    26,
+       9,     8,    52,    10,     9,     9,    13,    12,    12,    87,
+       3,     4,     5,     6,    29,     8,    23,    24,     7,    26,
+      13,    15,    79,    73,     3,     4,     5,     6,     9,     8,
+      14,    10,     5,    26,    13,    16,    17,    18,    19,    20,
+      30,     3,     4,     5,     6,     5,     8,    26,    10,    21,
+       9,    13,     3,     4,     5,     6,    31,     8,    25,    26,
       27,    28,    13,    30,    16,    17,    18,    19,    20
 };
 
@@ -814,8 +817,8 @@ static const yytype_int8 yystos[] =
 {
        0,     3,     4,     5,     6,     8,    10,    13,    26,    33,
       34,    35,    36,    37,    40,    41,    42,    43,    44,    45,
-      49,    50,     8,    35,    40,     5,    38,    41,     0,    34,
-       7,    11,    25,    26,    27,    28,    30,     8,    46,    51,
+      49,    50,    51,    35,    40,     5,    38,    41,     0,    34,
+       7,    11,    25,    26,    27,    28,    30,     8,    46,     8,
        9,     8,    29,    29,     7,    42,    49,    41,    41,    41,
       41,    41,     8,    23,    24,    40,    53,    14,    47,    41,
       52,     5,    39,    40,    40,    40,    53,    53,    16,    17,
@@ -841,7 +844,7 @@ static const yytype_int8 yyr2[] =
        0,     2,     2,     3,     1,     1,     1,     1,     4,     4,
        4,     1,     3,     1,     1,     2,     3,     3,     3,     3,
        3,     1,     1,     1,     1,     1,     1,     1,     3,     1,
-       6,     1,     3,     1,     1,     3,     3,     5,     0,     1,
+       6,     1,     3,     1,     1,     3,     3,     4,     1,     1,
        3,     1,     3,     3,     2,     3,     3,     1,     1,     1,
        1,     1
 };
@@ -1307,235 +1310,265 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* prog: inst PV  */
-#line 75 "myml.y"
-               {printf("/* Fin d'une instruction */\n\n");}
-#line 1313 "y.tab.c"
-    break;
-
-  case 3: /* prog: prog inst PV  */
-#line 77 "myml.y"
-               {printf("/* Fin d'une autre instruction */\n\n");}
-#line 1319 "y.tab.c"
+#line 82 "myml.y"
+               {printf("\n");}
+#line 1316 "y.tab.c"
     break;
 
   case 5: /* inst: exp  */
-#line 83 "myml.y"
+#line 90 "myml.y"
       {printf("DROP\n/* Dropping useless value */\n");}
-#line 1325 "y.tab.c"
+#line 1322 "y.tab.c"
+    break;
+
+  case 6: /* let_def: def_id  */
+#line 95 "myml.y"
+                 {}
+#line 1328 "y.tab.c"
+    break;
+
+  case 7: /* let_def: def_fun  */
+#line 96 "myml.y"
+          {file_out = fopen("test.p", "w"); stdout = file_out; fclose(file_out_function);}
+#line 1334 "y.tab.c"
     break;
 
   case 8: /* def_id: LET ID EQ exp  */
-#line 92 "myml.y"
-                        {add_symbol_value((yyvsp[-2].val_string),offset); printf("/* Value of %s stored at stack index fp+%d */\n",(yyvsp[-2].val_string),offset++);}
-#line 1331 "y.tab.c"
+#line 99 "myml.y"
+                        {add_symbol_value((yyvsp[-2].val_string),offset); printf("/* Value of %s stored at stack index fp+%d (l.92)*/\n", (yyvsp[-2].val_string), offset++);}
+#line 1340 "y.tab.c"
     break;
 
   case 9: /* def_fun: LET fun_head EQ exp  */
-#line 96 "myml.y"
-                              {printf("Une définition de fonction\n");}
-#line 1337 "y.tab.c"
+#line 101 "myml.y"
+                              {printf("return;\n}\n"); offset = get_symbol_value((yyvsp[-2].val_string)); delete_symbol_value();}
+#line 1346 "y.tab.c"
+    break;
+
+  case 10: /* fun_head: ID LPAR id_list RPAR  */
+#line 104 "myml.y"
+                                {(yyval.val_string) = (yyvsp[-3].val_string); file_out_function = fopen("test.fp", "w"); stdout = file_out_function; printf("void call_%s(){\n", (yyvsp[-3].val_string));}
+#line 1352 "y.tab.c"
+    break;
+
+  case 11: /* id_list: ID  */
+#line 108 "myml.y"
+             {add_symbol_value((yyvsp[(-1) - (1)].val_string), offset++); add_symbol_value((yyvsp[0].val_string), offset++);}
+#line 1358 "y.tab.c"
+    break;
+
+  case 12: /* id_list: id_list VIR ID  */
+#line 110 "myml.y"
+                 {add_symbol_value((yyvsp[0].val_string), offset++);}
+#line 1364 "y.tab.c"
     break;
 
   case 13: /* exp: arith_exp  */
-#line 107 "myml.y"
+#line 114 "myml.y"
                 {}
-#line 1343 "y.tab.c"
+#line 1370 "y.tab.c"
     break;
 
   case 14: /* exp: let_exp  */
-#line 108 "myml.y"
-          {printf("local symbol\n");}
-#line 1349 "y.tab.c"
+#line 115 "myml.y"
+          {}
+#line 1376 "y.tab.c"
     break;
 
   case 15: /* arith_exp: MOINS arith_exp  */
-#line 111 "myml.y"
+#line 118 "myml.y"
                                       {}
-#line 1355 "y.tab.c"
+#line 1382 "y.tab.c"
     break;
 
   case 16: /* arith_exp: arith_exp MOINS arith_exp  */
-#line 112 "myml.y"
+#line 119 "myml.y"
                             {printf("SUBI\n");}
-#line 1361 "y.tab.c"
+#line 1388 "y.tab.c"
     break;
 
   case 17: /* arith_exp: arith_exp PLUS arith_exp  */
-#line 113 "myml.y"
+#line 120 "myml.y"
                            {printf("ADDI\n");}
-#line 1367 "y.tab.c"
+#line 1394 "y.tab.c"
     break;
 
   case 18: /* arith_exp: arith_exp DIV arith_exp  */
-#line 114 "myml.y"
+#line 121 "myml.y"
                           {printf("DIVI\n");}
-#line 1373 "y.tab.c"
+#line 1400 "y.tab.c"
     break;
 
   case 19: /* arith_exp: arith_exp MULT arith_exp  */
-#line 115 "myml.y"
+#line 122 "myml.y"
                            {printf("MULTI\n");}
-#line 1379 "y.tab.c"
+#line 1406 "y.tab.c"
     break;
 
   case 20: /* arith_exp: arith_exp CONCAT arith_exp  */
-#line 116 "myml.y"
+#line 123 "myml.y"
                              {printf("concat\n");}
-#line 1385 "y.tab.c"
+#line 1412 "y.tab.c"
     break;
 
   case 21: /* arith_exp: atom_exp  */
-#line 117 "myml.y"
+#line 124 "myml.y"
            {}
-#line 1391 "y.tab.c"
+#line 1418 "y.tab.c"
     break;
 
   case 22: /* atom_exp: NUM  */
-#line 123 "myml.y"
+#line 127 "myml.y"
                {printf("LOADI %d\n", (yyvsp[0].val_int));}
-#line 1397 "y.tab.c"
+#line 1424 "y.tab.c"
     break;
 
   case 23: /* atom_exp: FLOAT  */
-#line 124 "myml.y"
+#line 128 "myml.y"
         {}
-#line 1403 "y.tab.c"
+#line 1430 "y.tab.c"
     break;
 
   case 24: /* atom_exp: STRING  */
-#line 125 "myml.y"
+#line 129 "myml.y"
          {}
-#line 1409 "y.tab.c"
+#line 1436 "y.tab.c"
     break;
 
   case 25: /* atom_exp: ID  */
-#line 126 "myml.y"
-     {printf("LOAD (fp+%d)\n/* Loading %s at stack index fp + %d */\n", get_symbol_value((yyvsp[0].val_string)), (yyvsp[0].val_string), get_symbol_value((yyvsp[0].val_string)));}
-#line 1415 "y.tab.c"
+#line 130 "myml.y"
+     {printf("LOAD (fp+%d) /* Loading %s at stack index fp + %d */\n", get_symbol_value((yyvsp[0].val_string)), (yyvsp[0].val_string), get_symbol_value((yyvsp[0].val_string)));}
+#line 1442 "y.tab.c"
     break;
 
   case 26: /* atom_exp: control_exp  */
-#line 127 "myml.y"
+#line 131 "myml.y"
               {}
-#line 1421 "y.tab.c"
+#line 1448 "y.tab.c"
     break;
 
   case 27: /* atom_exp: funcall_exp  */
-#line 128 "myml.y"
-              {offset = fp; printf("/* Restoring P-stack, with returned value added */\nRESTORE %d\n", offset );}
-#line 1427 "y.tab.c"
+#line 132 "myml.y"
+              {}
+#line 1454 "y.tab.c"
     break;
 
   case 28: /* atom_exp: LPAR exp RPAR  */
-#line 129 "myml.y"
+#line 133 "myml.y"
                 {}
-#line 1433 "y.tab.c"
+#line 1460 "y.tab.c"
     break;
 
   case 29: /* control_exp: if_exp  */
-#line 132 "myml.y"
+#line 136 "myml.y"
                      {}
-#line 1439 "y.tab.c"
+#line 1466 "y.tab.c"
     break;
 
   case 30: /* if_exp: if cond then atom_exp else atom_exp  */
-#line 136 "myml.y"
-                                             {printf("L%d:\n/* End if-then-else */\n",label_number+1);label_number = label_number - (2*(nb_if-1));}
-#line 1445 "y.tab.c"
+#line 140 "myml.y"
+                                             {printf("L%d:\n/* End if-then-else */\n",label_number+1); label_number = label_number - (2*(nb_if-1));}
+#line 1472 "y.tab.c"
     break;
 
   case 31: /* if: IF  */
-#line 151 "myml.y"
+#line 148 "myml.y"
         {label_number = 2*nb_if; nb_if = nb_if +1; (yyval.val_int) = label_number;}
-#line 1451 "y.tab.c"
+#line 1478 "y.tab.c"
     break;
 
   case 32: /* cond: LPAR bool RPAR  */
-#line 152 "myml.y"
+#line 149 "myml.y"
                       {}
-#line 1457 "y.tab.c"
+#line 1484 "y.tab.c"
     break;
 
   case 33: /* then: THEN  */
-#line 153 "myml.y"
-            {(yyval.val_int) = (yyvsp[(-1) - (1)].val_int); printf("IFN L%d\n/* Negation condition tested */\n/* case true */\n",label_number);}
-#line 1463 "y.tab.c"
+#line 150 "myml.y"
+            {(yyval.val_int) = (yyvsp[(-1) - (1)].val_int); printf("IFN L%d\n/* Negation condition tested */\n/* case true */\n", (yyval.val_int));}
+#line 1490 "y.tab.c"
     break;
 
   case 34: /* else: ELSE  */
-#line 154 "myml.y"
-            {(yyval.val_int) = (yyvsp[(-1) - (1)].val_int); printf("GOTO L%d\n/* Case false */\nL%d:\n",label_number+1,label_number);}
-#line 1469 "y.tab.c"
+#line 151 "myml.y"
+            {(yyval.val_int) = (yyvsp[(-1) - (1)].val_int); printf("GOTO L%d\n/* Case false */\nL%d:\n", (yyval.val_int)+1, (yyval.val_int));}
+#line 1496 "y.tab.c"
     break;
 
   case 35: /* let_exp: let_def IN atom_exp  */
-#line 157 "myml.y"
-                              {delete_symbol_value(); offset--; printf("DRCP\n");}
-#line 1475 "y.tab.c"
+#line 154 "myml.y"
+                              {delete_symbol_value(); offset--; printf("DRCP  (l.151)\n");}
+#line 1502 "y.tab.c"
     break;
 
-  case 37: /* funcall_exp: ID LPAR test_exp arg_list RPAR  */
+  case 36: /* let_exp: let_def IN let_exp  */
+#line 155 "myml.y"
+                     {delete_symbol_value(); offset--; printf("DRCP (l.152)\n");}
+#line 1508 "y.tab.c"
+    break;
+
+  case 37: /* funcall_exp: fid LPAR arg_list RPAR  */
+#line 158 "myml.y"
+                                     {(yyval.val_string)=(yyvsp[-3].val_string); printf("CALL call_%s\n", (yyvsp[-3].val_string)); offset = get_symbol_value((yyvsp[-3].val_string)); printf("/* Restoring P-stack, with returned value added */\nRESTORE %d\n", (yyvsp[-1].val_int));}
+#line 1514 "y.tab.c"
+    break;
+
+  case 38: /* fid: ID  */
 #line 161 "myml.y"
-                                             {printf("CALL call_%s\n", (yyvsp[-4].val_string)); arg_nb = 1;}
-#line 1481 "y.tab.c"
-    break;
-
-  case 38: /* test_exp: %empty  */
-#line 164 "myml.y"
-          {printf("/* Preparing %s call with %d argument(s) */\nSAVEFP\n",(yyvsp[(-2) - (0)].val_int), arg_nb); fp = offset;}
-#line 1487 "y.tab.c"
+        {printf("/* Preparing %s call with %d argument(s) */\nSAVEFP\n", (yyvsp[0].val_string), arg_nb); (yyval.val_string)=(yyvsp[0].val_string); add_symbol_value((yyvsp[0].val_string), offset);}
+#line 1520 "y.tab.c"
     break;
 
   case 39: /* arg_list: arith_exp  */
-#line 167 "myml.y"
-                     {printf("/* Argument %d loaded */\n",arg_nb); arg_nb++;}
-#line 1493 "y.tab.c"
+#line 164 "myml.y"
+                     {(yyval.val_int) = 1; printf("/* Argument %d loaded */\n",(yyval.val_int));}
+#line 1526 "y.tab.c"
     break;
 
   case 40: /* arg_list: arg_list VIR arith_exp  */
-#line 168 "myml.y"
-                          {printf("/* Argument %d loaded */\n",arg_nb); arg_nb++;}
-#line 1499 "y.tab.c"
+#line 165 "myml.y"
+                          {(yyval.val_int) = (yyvsp[-2].val_int) + 1; printf("/* Argument %d loaded */\n",(yyval.val_int));}
+#line 1532 "y.tab.c"
     break;
 
   case 45: /* bool: exp comp exp  */
-#line 175 "myml.y"
-               {printf("%s\n /* condition loaded */\n", (yyvsp[-1].val_string));}
-#line 1505 "y.tab.c"
+#line 172 "myml.y"
+               {printf("\n /* condition loaded */\n");}
+#line 1538 "y.tab.c"
     break;
 
   case 47: /* comp: ISLT  */
-#line 180 "myml.y"
+#line 177 "myml.y"
              {(yyval.val_string) = "LT";}
-#line 1511 "y.tab.c"
+#line 1544 "y.tab.c"
     break;
 
   case 48: /* comp: ISGT  */
-#line 181 "myml.y"
+#line 178 "myml.y"
        {(yyval.val_string) = "GT";}
-#line 1517 "y.tab.c"
+#line 1550 "y.tab.c"
     break;
 
   case 49: /* comp: ISLEQ  */
-#line 182 "myml.y"
+#line 179 "myml.y"
         {(yyval.val_string) = "LEQ";}
-#line 1523 "y.tab.c"
+#line 1556 "y.tab.c"
     break;
 
   case 50: /* comp: ISGEQ  */
-#line 183 "myml.y"
+#line 180 "myml.y"
         {(yyval.val_string) = "GEQ";}
-#line 1529 "y.tab.c"
+#line 1562 "y.tab.c"
     break;
 
   case 51: /* comp: ISEQ  */
-#line 184 "myml.y"
+#line 181 "myml.y"
        {(yyval.val_string) = "EQ";}
-#line 1535 "y.tab.c"
+#line 1568 "y.tab.c"
     break;
 
 
-#line 1539 "y.tab.c"
+#line 1572 "y.tab.c"
 
       default: break;
     }
@@ -1728,7 +1761,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 187 "myml.y"
+#line 184 "myml.y"
  
 int main () {
     /* The code below is just a standard usage example.
@@ -1740,20 +1773,20 @@ int main () {
     stderr = stdin;
 
     /* opening target code file and redirecting stdout on it */
-    /* file_out = fopen("test.p","w");
-    stdout = file_out;  */
+    file_out = fopen("test.p","w");
+    stdout = file_out; 
 
     /* openng source code file and redirecting stdin from it */
-    /* file_in = fopen("test5.ml","r"); 
-    stdin = file_in;  */
+    file_in = fopen("testExemple.ml","r"); 
+    stdin = file_in; 
 
     /* As a starter, one may comment the above line for usual stdin as input */
 
     yyparse();
 
     /* any open file shall be closed */
-    /* fclose(file_out);
-    fclose(file_in); */
+    fclose(file_out);
+    fclose(file_in);
  
     return 1;
 } 
