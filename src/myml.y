@@ -184,13 +184,16 @@ comp :  ISLT {$$ = "LT";}
 ;
 
 %% 
-int main () {
+int main (int argc, char **argv) {
     /* The code below is just a standard usage example.
     Of course, it can be changed at will.
 
     for instance, one could grab input and ouput file names 
     in command line arguements instead of having them hard coded */
 
+    if (argc < 2) {
+        return EXIT_FAILURE;
+    }
     stderr = stdin;
 
     /* opening target code file and redirecting stdout on it */
@@ -198,7 +201,7 @@ int main () {
     stdout = file_out; 
 
     /* openng source code file and redirecting stdin from it */
-    file_in = fopen("testExemple.ml","r"); 
+    file_in = fopen(argv[1], "r"); 
     stdin = file_in; 
 
     /* As a starter, one may comment the above line for usual stdin as input */

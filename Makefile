@@ -1,10 +1,10 @@
 all		:	myml
 
-y.tab.h y.tab.c :	myml.y
-			bison -y  -d -v  myml.y
-lex.yy.c	:	myml.l y.tab.h
-			flex myml.l 
-myml		:	lex.yy.c y.tab.c Table_des_symboles.c Table_des_chaines.c Attribut.c
-			gcc -o myml lex.yy.c y.tab.c Table_des_symboles.c Table_des_chaines.c Attribut.c
+src/y.tab.h src/y.tab.c :	src/myml.y
+			bison -y -o $@ -d -v  src/myml.y
+lex.yy.c	:	src/myml.l src/y.tab.h
+			flex src/myml.l 
+myml		:	src/lex.yy.c src/y.tab.c src/Table_des_symboles.c src/Table_des_chaines.c src/Attribut.c
+			gcc -o myml $^
 clean		:	
-			rm -f 	lex.yy.c *.o y.tab.h y.tab.c myml *~ y.output
+			rm -f 	src/lex.yy.c *.o src/y.tab.h src/y.tab.c myml *~ y.output
