@@ -1,4 +1,1 @@
-let x = 1;
-let g(x,y) = let z = 3 in (x+y+z);
-let y = 2;
-let z = g(1,2);
+let fact(x) = if (x<=0) then 1 else (x*fact(x-1));

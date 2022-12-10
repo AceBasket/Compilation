@@ -6,6 +6,7 @@
 #include "Table_des_symboles.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 FILE * file_in = NULL;
 FILE * file_out = NULL;
@@ -18,7 +19,10 @@ int offset = 0;
 int label_number = 0;
 int nb_if = 0;
 int arg_nb = 1;
-// char *func_name = "";
+int nb_function = 0;
+char *str_nb_function;
+char *nom_ecriture_function = "test";
+char *nom_fichier[64];
 
 
 void yyerror (char* s) {
@@ -96,12 +100,12 @@ let_def : def_id {$$ = $1;}
 | def_fun {stdout = file_out; fclose(file_out_function);}
 ;
 
-def_id : LET ID EQ exp  {$$ = $2; add_symbol_value($2,offset); printf("/* Value of %s stored at stack index fp+%d (l.92)*/\n", $2, offset++);}
+def_id : LET ID EQ exp  {$$ = $2; add_symbol_value($2,offset); printf("/* Value of %s stored at stack index fp+%d*/\n", $2, offset++);}
 ;
 def_fun : LET fun_head EQ exp {printf("return;\n}\n"); offset = get_symbol_value($2); delete_symbol_value();}
 ;
 
-fun_head : ID LPAR id_list RPAR {$$ = $1; file_out_function = fopen("test.fp", "w"); stdout = file_out_function; printf("void call_%s(){\n", $1);} //  
+fun_head : ID LPAR id_list RPAR {$$ = $1; printf("/* Function %s defined in separated file */\n", $1); file_out_function = fopen("test.fp", "w"); stdout = file_out_function; printf("void call_%s(){\n", $1);} //  
 ;
 
 id_list : ID {add_symbol_value($<val_string>-1, offset); offset = 1; add_symbol_value($1, offset); offset++;} 
