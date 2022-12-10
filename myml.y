@@ -58,6 +58,7 @@ void yyerror (char* s) {
 %left CONCAT
 %nonassoc UNA    /* pseudo token pour assurer une priorite locale */
 
+%type <val_string> let_def
 %type <val_string> fun_head
 %type <val_string> funcall_exp
 %type <val_string> fid
@@ -80,7 +81,7 @@ void yyerror (char* s) {
 
 prog : inst PV {printf("\n");}
 
-| prog inst PV //{printf("/* Fin d'une autre instruction */\n\n");}
+| prog inst PV {printf("\n");}
 ;
 
 /* a instruction is either a value or a definition (that indeed looks like an affectation) */
@@ -91,20 +92,19 @@ inst : let_def
 
 
 
-let_def : def_id {}
-| def_fun {file_out = fopen("test.p", "w"); stdout = file_out; fclose(file_out_function);}
+let_def : def_id {$$ = $1;}
+| def_fun {stdout = file_out; fclose(file_out_function);}
 ;
 
-def_id : LET ID EQ exp  {add_symbol_value($2,offset); printf("/* Value of %s stored at stack index fp+%d (l.92)*/\n", $2, offset++);}
+def_id : LET ID EQ exp  {$$ = $2; add_symbol_value($2,offset); printf("/* Value of %s stored at stack index fp+%d (l.92)*/\n", $2, offset++);}
 ;
 def_fun : LET fun_head EQ exp {printf("return;\n}\n"); offset = get_symbol_value($2); delete_symbol_value();}
 ;
 
 fun_head : ID LPAR id_list RPAR {$$ = $1; file_out_function = fopen("test.fp", "w"); stdout = file_out_function; printf("void call_%s(){\n", $1);} //  
-/* fun_head : ID LPAR id_list RPAR {fp = offset; offset = 0; add_symbol_value($1, offset); offset++; printf("void call_%s(){\n", $1);} //  stdout = fopen("test.fp", "w"); */
 ;
 
-id_list : ID {add_symbol_value($<val_string>-2, offset); offset = 1; add_symbol_value($1, offset++);} 
+id_list : ID {add_symbol_value($<val_string>-1, offset); offset = 1; add_symbol_value($1, offset); offset++;} 
 // 1re règle exécutée lors de la déclaration d'une fonction --> on stocke l'offset avant déclaration de la fonction dans la table des symbol avec le nom de la fonction comme symbol
 | id_list VIR ID {add_symbol_value($3, offset++);}
 ;
@@ -128,7 +128,7 @@ atom_exp : NUM {printf("LOADI %d\n", $1);}
 | STRING {}
 | ID {printf("LOAD (fp+%d) /* Loading %s at stack index fp + %d */\n", get_symbol_value($1), $1, get_symbol_value($1));} 
 | control_exp {}                                           
-| funcall_exp {}//; printf("fp = %d and offset = %d\n", fp, offset);} //arg_nb = 1; 
+| funcall_exp {} 
 | LPAR exp RPAR {}
 ;
 
@@ -149,8 +149,8 @@ then : THEN {$$ = $<val_int>-1; printf("IFN L%d\n/* Negation condition tested */
 else : ELSE {$$ = $<val_int>-1; printf("GOTO L%d\n/* Case false */\nL%d:\n", $$+1, $$);}; 
 
 
-let_exp : let_def IN atom_exp {delete_symbol_value(); offset--; printf("DRCP  (l.151)\n");}// /* Replacing local symbol %s by expression result */\n", $3);}
-| let_def IN let_exp {delete_symbol_value(); offset--; printf("DRCP (l.152)\n");}
+let_exp : let_def IN atom_exp {delete_symbol_value(); offset--; printf("DRCP\n/* Replacing local symbol %s by expression result */\n", $1);}
+| let_def IN let_exp {delete_symbol_value(); offset--; printf("DRCP\n");}
 ;
 
 funcall_exp : fid LPAR arg_list RPAR {printf("CALL call_%s\n", $1); offset = get_symbol_value($1); printf("/* Restoring P-stack, with returned value added */\nRESTORE %d\n", offset);}

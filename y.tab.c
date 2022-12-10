@@ -679,12 +679,12 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    81,    81,    83,    88,    89,    94,    95,    98,   100,
-     103,   107,   109,   113,   114,   117,   118,   119,   120,   121,
+       0,    82,    82,    84,    89,    90,    95,    96,    99,   101,
+     104,   107,   109,   113,   114,   117,   118,   119,   120,   121,
      122,   123,   126,   127,   128,   129,   130,   131,   132,   135,
-     139,   147,   148,   149,   150,   153,   154,   157,   160,   163,
-     164,   167,   168,   169,   170,   171,   172,   176,   177,   178,
-     179,   180
+     139,   146,   147,   148,   149,   152,   153,   156,   159,   162,
+     163,   166,   167,   168,   169,   170,   171,   175,   176,   177,
+     178,   179
 };
 #endif
 
@@ -1309,265 +1309,271 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* prog: inst PV  */
-#line 81 "myml.y"
+#line 82 "myml.y"
                {printf("\n");}
 #line 1315 "y.tab.c"
     break;
 
-  case 5: /* inst: exp  */
-#line 89 "myml.y"
-      {printf("DROP\n/* Dropping useless value */\n");}
+  case 3: /* prog: prog inst PV  */
+#line 84 "myml.y"
+               {printf("\n");}
 #line 1321 "y.tab.c"
     break;
 
-  case 6: /* let_def: def_id  */
-#line 94 "myml.y"
-                 {}
+  case 5: /* inst: exp  */
+#line 90 "myml.y"
+      {printf("DROP\n/* Dropping useless value */\n");}
 #line 1327 "y.tab.c"
     break;
 
-  case 7: /* let_def: def_fun  */
+  case 6: /* let_def: def_id  */
 #line 95 "myml.y"
-          {file_out = fopen("test.p", "w"); stdout = file_out; fclose(file_out_function);}
+                 {(yyval.val_string) = (yyvsp[0].val_string);}
 #line 1333 "y.tab.c"
     break;
 
-  case 8: /* def_id: LET ID EQ exp  */
-#line 98 "myml.y"
-                        {add_symbol_value((yyvsp[-2].val_string),offset); printf("/* Value of %s stored at stack index fp+%d (l.92)*/\n", (yyvsp[-2].val_string), offset++);}
+  case 7: /* let_def: def_fun  */
+#line 96 "myml.y"
+          {stdout = file_out; fclose(file_out_function);}
 #line 1339 "y.tab.c"
     break;
 
-  case 9: /* def_fun: LET fun_head EQ exp  */
-#line 100 "myml.y"
-                              {printf("return;\n}\n"); offset = get_symbol_value((yyvsp[-2].val_string)); delete_symbol_value();}
+  case 8: /* def_id: LET ID EQ exp  */
+#line 99 "myml.y"
+                        {(yyval.val_string) = (yyvsp[-2].val_string); add_symbol_value((yyvsp[-2].val_string),offset); printf("/* Value of %s stored at stack index fp+%d (l.92)*/\n", (yyvsp[-2].val_string), offset++);}
 #line 1345 "y.tab.c"
     break;
 
-  case 10: /* fun_head: ID LPAR id_list RPAR  */
-#line 103 "myml.y"
-                                {(yyval.val_string) = (yyvsp[-3].val_string); file_out_function = fopen("test.fp", "w"); stdout = file_out_function; printf("void call_%s(){\n", (yyvsp[-3].val_string));}
+  case 9: /* def_fun: LET fun_head EQ exp  */
+#line 101 "myml.y"
+                              {printf("return;\n}\n"); offset = get_symbol_value((yyvsp[-2].val_string)); delete_symbol_value();}
 #line 1351 "y.tab.c"
+    break;
+
+  case 10: /* fun_head: ID LPAR id_list RPAR  */
+#line 104 "myml.y"
+                                {(yyval.val_string) = (yyvsp[-3].val_string); file_out_function = fopen("test.fp", "w"); stdout = file_out_function; printf("void call_%s(){\n", (yyvsp[-3].val_string));}
+#line 1357 "y.tab.c"
     break;
 
   case 11: /* id_list: ID  */
 #line 107 "myml.y"
-             {add_symbol_value((yyvsp[(-1) - (1)].val_string), offset++); add_symbol_value((yyvsp[0].val_string), offset++);}
-#line 1357 "y.tab.c"
+             {add_symbol_value((yyvsp[(-1) - (1)].val_string), offset); offset = 1; add_symbol_value((yyvsp[0].val_string), offset); offset++;}
+#line 1363 "y.tab.c"
     break;
 
   case 12: /* id_list: id_list VIR ID  */
 #line 109 "myml.y"
                  {add_symbol_value((yyvsp[0].val_string), offset++);}
-#line 1363 "y.tab.c"
+#line 1369 "y.tab.c"
     break;
 
   case 13: /* exp: arith_exp  */
 #line 113 "myml.y"
                 {}
-#line 1369 "y.tab.c"
+#line 1375 "y.tab.c"
     break;
 
   case 14: /* exp: let_exp  */
 #line 114 "myml.y"
           {}
-#line 1375 "y.tab.c"
+#line 1381 "y.tab.c"
     break;
 
   case 15: /* arith_exp: MOINS arith_exp  */
 #line 117 "myml.y"
                                       {}
-#line 1381 "y.tab.c"
+#line 1387 "y.tab.c"
     break;
 
   case 16: /* arith_exp: arith_exp MOINS arith_exp  */
 #line 118 "myml.y"
                             {printf("SUBI\n");}
-#line 1387 "y.tab.c"
+#line 1393 "y.tab.c"
     break;
 
   case 17: /* arith_exp: arith_exp PLUS arith_exp  */
 #line 119 "myml.y"
                            {printf("ADDI\n");}
-#line 1393 "y.tab.c"
+#line 1399 "y.tab.c"
     break;
 
   case 18: /* arith_exp: arith_exp DIV arith_exp  */
 #line 120 "myml.y"
                           {printf("DIVI\n");}
-#line 1399 "y.tab.c"
+#line 1405 "y.tab.c"
     break;
 
   case 19: /* arith_exp: arith_exp MULT arith_exp  */
 #line 121 "myml.y"
                            {printf("MULTI\n");}
-#line 1405 "y.tab.c"
+#line 1411 "y.tab.c"
     break;
 
   case 20: /* arith_exp: arith_exp CONCAT arith_exp  */
 #line 122 "myml.y"
                              {printf("concat\n");}
-#line 1411 "y.tab.c"
+#line 1417 "y.tab.c"
     break;
 
   case 21: /* arith_exp: atom_exp  */
 #line 123 "myml.y"
            {}
-#line 1417 "y.tab.c"
+#line 1423 "y.tab.c"
     break;
 
   case 22: /* atom_exp: NUM  */
 #line 126 "myml.y"
                {printf("LOADI %d\n", (yyvsp[0].val_int));}
-#line 1423 "y.tab.c"
+#line 1429 "y.tab.c"
     break;
 
   case 23: /* atom_exp: FLOAT  */
 #line 127 "myml.y"
         {}
-#line 1429 "y.tab.c"
+#line 1435 "y.tab.c"
     break;
 
   case 24: /* atom_exp: STRING  */
 #line 128 "myml.y"
          {}
-#line 1435 "y.tab.c"
+#line 1441 "y.tab.c"
     break;
 
   case 25: /* atom_exp: ID  */
 #line 129 "myml.y"
      {printf("LOAD (fp+%d) /* Loading %s at stack index fp + %d */\n", get_symbol_value((yyvsp[0].val_string)), (yyvsp[0].val_string), get_symbol_value((yyvsp[0].val_string)));}
-#line 1441 "y.tab.c"
+#line 1447 "y.tab.c"
     break;
 
   case 26: /* atom_exp: control_exp  */
 #line 130 "myml.y"
               {}
-#line 1447 "y.tab.c"
+#line 1453 "y.tab.c"
     break;
 
   case 27: /* atom_exp: funcall_exp  */
 #line 131 "myml.y"
               {}
-#line 1453 "y.tab.c"
+#line 1459 "y.tab.c"
     break;
 
   case 28: /* atom_exp: LPAR exp RPAR  */
 #line 132 "myml.y"
                 {}
-#line 1459 "y.tab.c"
+#line 1465 "y.tab.c"
     break;
 
   case 29: /* control_exp: if_exp  */
 #line 135 "myml.y"
                      {}
-#line 1465 "y.tab.c"
+#line 1471 "y.tab.c"
     break;
 
   case 30: /* if_exp: if cond then atom_exp else atom_exp  */
 #line 139 "myml.y"
                                              {printf("L%d:\n/* End if-then-else */\n",label_number+1); label_number = label_number - (2*(nb_if-1));}
-#line 1471 "y.tab.c"
-    break;
-
-  case 31: /* if: IF  */
-#line 147 "myml.y"
-        {label_number = 2*nb_if; nb_if = nb_if +1; (yyval.val_int) = label_number;}
 #line 1477 "y.tab.c"
     break;
 
-  case 32: /* cond: LPAR bool RPAR  */
-#line 148 "myml.y"
-                      {}
+  case 31: /* if: IF  */
+#line 146 "myml.y"
+        {label_number = 2*nb_if; nb_if = nb_if +1; (yyval.val_int) = label_number;}
 #line 1483 "y.tab.c"
     break;
 
-  case 33: /* then: THEN  */
-#line 149 "myml.y"
-            {(yyval.val_int) = (yyvsp[(-1) - (1)].val_int); printf("IFN L%d\n/* Negation condition tested */\n/* case true */\n", (yyval.val_int));}
+  case 32: /* cond: LPAR bool RPAR  */
+#line 147 "myml.y"
+                      {}
 #line 1489 "y.tab.c"
     break;
 
-  case 34: /* else: ELSE  */
-#line 150 "myml.y"
-            {(yyval.val_int) = (yyvsp[(-1) - (1)].val_int); printf("GOTO L%d\n/* Case false */\nL%d:\n", (yyval.val_int)+1, (yyval.val_int));}
+  case 33: /* then: THEN  */
+#line 148 "myml.y"
+            {(yyval.val_int) = (yyvsp[(-1) - (1)].val_int); printf("IFN L%d\n/* Negation condition tested */\n/* case true */\n", (yyval.val_int));}
 #line 1495 "y.tab.c"
     break;
 
-  case 35: /* let_exp: let_def IN atom_exp  */
-#line 153 "myml.y"
-                              {delete_symbol_value(); offset--; printf("DRCP  (l.151)\n");}
+  case 34: /* else: ELSE  */
+#line 149 "myml.y"
+            {(yyval.val_int) = (yyvsp[(-1) - (1)].val_int); printf("GOTO L%d\n/* Case false */\nL%d:\n", (yyval.val_int)+1, (yyval.val_int));}
 #line 1501 "y.tab.c"
     break;
 
-  case 36: /* let_exp: let_def IN let_exp  */
-#line 154 "myml.y"
-                     {delete_symbol_value(); offset--; printf("DRCP (l.152)\n");}
+  case 35: /* let_exp: let_def IN atom_exp  */
+#line 152 "myml.y"
+                              {delete_symbol_value(); offset--; printf("DRCP\n/* Replacing local symbol %s by expression result */\n", (yyvsp[-2].val_string));}
 #line 1507 "y.tab.c"
     break;
 
-  case 37: /* funcall_exp: fid LPAR arg_list RPAR  */
-#line 157 "myml.y"
-                                     {printf("CALL call_%s\n", (yyvsp[-3].val_string)); offset = get_symbol_value((yyvsp[-3].val_string)); printf("/* Restoring P-stack, with returned value added */\nRESTORE %d\n", offset);}
+  case 36: /* let_exp: let_def IN let_exp  */
+#line 153 "myml.y"
+                     {delete_symbol_value(); offset--; printf("DRCP\n");}
 #line 1513 "y.tab.c"
     break;
 
-  case 38: /* fid: ID  */
-#line 160 "myml.y"
-        {printf("/* Preparing %s call with %d argument(s) */\nSAVEFP\n", (yyvsp[0].val_string), arg_nb); (yyval.val_string)=(yyvsp[0].val_string); add_symbol_value((yyvsp[0].val_string), offset);}
+  case 37: /* funcall_exp: fid LPAR arg_list RPAR  */
+#line 156 "myml.y"
+                                     {printf("CALL call_%s\n", (yyvsp[-3].val_string)); offset = get_symbol_value((yyvsp[-3].val_string)); printf("/* Restoring P-stack, with returned value added */\nRESTORE %d\n", offset);}
 #line 1519 "y.tab.c"
     break;
 
-  case 39: /* arg_list: arith_exp  */
-#line 163 "myml.y"
-                     {(yyval.val_int) = 1; printf("/* Argument %d loaded */\n",(yyval.val_int));}
+  case 38: /* fid: ID  */
+#line 159 "myml.y"
+        {printf("/* Preparing %s call with %d argument(s) */\nSAVEFP\n", (yyvsp[0].val_string), arg_nb); (yyval.val_string)=(yyvsp[0].val_string); add_symbol_value((yyvsp[0].val_string), offset);}
 #line 1525 "y.tab.c"
     break;
 
-  case 40: /* arg_list: arg_list VIR arith_exp  */
-#line 164 "myml.y"
-                          {(yyval.val_int) = (yyvsp[-2].val_int) + 1; printf("/* Argument %d loaded */\n",(yyval.val_int));}
+  case 39: /* arg_list: arith_exp  */
+#line 162 "myml.y"
+                     {(yyval.val_int) = 1; printf("/* Argument %d loaded */\n",(yyval.val_int));}
 #line 1531 "y.tab.c"
     break;
 
-  case 45: /* bool: exp comp exp  */
-#line 171 "myml.y"
-               {printf("%s\n /* condition loaded */\n", (yyvsp[-1].val_string));}
+  case 40: /* arg_list: arg_list VIR arith_exp  */
+#line 163 "myml.y"
+                          {(yyval.val_int) = (yyvsp[-2].val_int) + 1; printf("/* Argument %d loaded */\n",(yyval.val_int));}
 #line 1537 "y.tab.c"
     break;
 
-  case 47: /* comp: ISLT  */
-#line 176 "myml.y"
-             {(yyval.val_string) = "LT";}
+  case 45: /* bool: exp comp exp  */
+#line 170 "myml.y"
+               {printf("%s\n/* condition loaded */\n", (yyvsp[-1].val_string));}
 #line 1543 "y.tab.c"
     break;
 
-  case 48: /* comp: ISGT  */
-#line 177 "myml.y"
-       {(yyval.val_string) = "GT";}
+  case 47: /* comp: ISLT  */
+#line 175 "myml.y"
+             {(yyval.val_string) = "LT";}
 #line 1549 "y.tab.c"
     break;
 
-  case 49: /* comp: ISLEQ  */
-#line 178 "myml.y"
-        {(yyval.val_string) = "LEQ";}
+  case 48: /* comp: ISGT  */
+#line 176 "myml.y"
+       {(yyval.val_string) = "GT";}
 #line 1555 "y.tab.c"
     break;
 
-  case 50: /* comp: ISGEQ  */
-#line 179 "myml.y"
-        {(yyval.val_string) = "GEQ";}
+  case 49: /* comp: ISLEQ  */
+#line 177 "myml.y"
+        {(yyval.val_string) = "LEQ";}
 #line 1561 "y.tab.c"
     break;
 
-  case 51: /* comp: ISEQ  */
-#line 180 "myml.y"
-       {(yyval.val_string) = "EQ";}
+  case 50: /* comp: ISGEQ  */
+#line 178 "myml.y"
+        {(yyval.val_string) = "GEQ";}
 #line 1567 "y.tab.c"
     break;
 
+  case 51: /* comp: ISEQ  */
+#line 179 "myml.y"
+       {(yyval.val_string) = "EQ";}
+#line 1573 "y.tab.c"
+    break;
 
-#line 1571 "y.tab.c"
+
+#line 1577 "y.tab.c"
 
       default: break;
     }
@@ -1760,7 +1766,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 183 "myml.y"
+#line 182 "myml.y"
  
 int main () {
     /* The code below is just a standard usage example.
