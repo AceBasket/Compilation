@@ -169,7 +169,7 @@ bool : BOOL
 | bool OR bool
 | bool AND bool
 | NOT bool %prec UNA 
-| exp comp exp {printf("\n /* condition loaded */\n");}
+| exp comp exp {printf("%s\n /* condition loaded */\n", $2);}
 | LPAR bool RPAR
 ;
 

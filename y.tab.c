@@ -1533,7 +1533,7 @@ yyreduce:
 
   case 45: /* bool: exp comp exp  */
 #line 172 "myml.y"
-               {printf("\n /* condition loaded */\n");}
+               {printf("%s\n /* condition loaded */\n", (yyvsp[-1].val_string));}
 #line 1538 "y.tab.c"
     break;
 

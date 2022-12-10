@@ -1,11 +1,15 @@
+LOADI 1
+/* Value of x stored at stack index fp+0 (l.92)*/
 
-LOADI 3
-/* Value of y stored at stack index fp+0 (l.92)*/
-/* Preparing plusUn call with 1 argument(s) */
+* Preparing g call with 1 argument(s) */
 SAVEFP
-LOAD (fp+0) /* Loading y at stack index fp + 0 */
+LOADI 1
 /* Argument 1 loaded */
-CALL call_plusUn
+LOADI 2
+/* Argument 2 loaded */
+CALL call_g
 /* Restoring P-stack, with returned value added */
-RESTORE 1
-/* Value of z stored at stack index fp+1 (l.92)*/
+RESTORE 2
+/* Value of z stored at stack index fp+2 (l.92)*/
+
+syntax error
