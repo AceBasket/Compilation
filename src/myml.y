@@ -105,7 +105,7 @@ def_id : LET ID EQ exp  {$$ = $2; add_symbol_value($2,offset); printf("/* Value 
 def_fun : LET fun_head EQ exp {printf("return;\n}\n"); offset = get_symbol_value($2); delete_symbol_value();}
 ;
 
-fun_head : ID LPAR id_list RPAR {$$ = $1; printf("/* Function %s defined in separated file */\n", $1); file_out_function = fopen("test.fp", "w"); stdout = file_out_function; printf("void call_%s(){\n", $1);} //  
+fun_head : ID LPAR id_list RPAR {$$ = $1; printf("/* Function %s defined in separated file */\n", $1); file_out_function = fopen("test.fp", "a"); stdout = file_out_function; printf("void call_%s(){\n", $1);} //  
 ;
 
 id_list : ID {add_symbol_value($<val_string>-1, offset); offset = 1; add_symbol_value($1, offset); offset++;} 
@@ -195,6 +195,8 @@ int main (int argc, char **argv) {
         return EXIT_FAILURE;
     }
     stderr = stdin;
+
+    fclose(fopen("test.fp", "w"));
 
     /* opening target code file and redirecting stdout on it */
     file_out = fopen("test.p","w");

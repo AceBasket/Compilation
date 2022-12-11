@@ -37,9 +37,9 @@ let z = if (x > 1) then if (y>3) then 0 else 1 else if (y<5) then 2 else 3;
 
 /* 5. Fonctions */
 
-let f(x,y) = x + y;
+let g(x,y) = x + y;
 
-f(1,2);
+g(1,2);
 
 /* 6. Recursions */
 
