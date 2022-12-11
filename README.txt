@@ -7,7 +7,9 @@ En l'état actuel du code, notre compilateur permet de:
     - Gerer des boucles conditionnelles ( imbriquées ou non)
     - Définir et appeler des fonctions récursives ou non (utilisant uniquement leurs parametres et pas les variables globales)
 
-Nous avons également un problème lors de la récupération du nombre d'arguments données aux fonctions, car l'affichage de celui-ci doit se faire avant la liste des arguments.
+Nous avons également un problème lors de la récupération du nombre d'arguments données aux fonctions lors de leur appel, car l'affichage de celui-ci doit se faire avant la liste des arguments.
 
 Une amélioration potentielle de notre compilateur serait de créer un fichier .fp par fonction definie, au lieu d'écraser l'unique fichier à l'heure actuelle
 
+Pour compiler et exécuter notre code, faire
+./compil.sh test/<nom_du_test>

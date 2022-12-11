@@ -1,7 +1,9 @@
 /* 5. Fonctions */
 
-let f(x,y) = x + y;
+let x = 1;
 
-f(1,2);
+let g(x,y) = let z = 3 in (x+y+z);
 
-let f(x,y) = x + y in f(1,2);
+let y = 2;
+
+let z = g(1,2);
