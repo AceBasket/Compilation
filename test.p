@@ -11,5 +11,3 @@ CALL call_g
 /* Restoring P-stack, with returned value added */
 RESTORE 2
 /* Value of z stored at stack index fp+2 (l.92)*/
-
-syntax error

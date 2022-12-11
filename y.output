@@ -1,4 +1,4 @@
-Grammar
+Grammaire
 
     0 $accept: prog $end
 
@@ -75,7 +75,7 @@ Grammar
    50     | ISEQ
 
 
-Terminals, with rules where they appear
+Terminaux, suivis des règles où ils apparaissent
 
     $end (0) 0
     error (256)
@@ -110,272 +110,272 @@ Terminals, with rules where they appear
     UNA (286)
 
 
-Nonterminals, with rules where they appear
+Non-terminaux, suivis des règles où ils apparaissent
 
     $accept (32)
-        on left: 0
+        à gauche: 0
     prog (33)
-        on left: 1 2
-        on right: 0 2
+        à gauche: 1 2
+        à droite: 0 2
     inst (34)
-        on left: 3 4
-        on right: 1 2
+        à gauche: 3 4
+        à droite: 1 2
     let_def (35)
-        on left: 5 6
-        on right: 3 34 35
+        à gauche: 5 6
+        à droite: 3 34 35
     def_id <val_string> (36)
-        on left: 7
-        on right: 5
+        à gauche: 7
+        à droite: 5
     def_fun (37)
-        on left: 8
-        on right: 6
+        à gauche: 8
+        à droite: 6
     fun_head <val_string> (38)
-        on left: 9
-        on right: 8
+        à gauche: 9
+        à droite: 8
     id_list (39)
-        on left: 10 11
-        on right: 9 11
+        à gauche: 10 11
+        à droite: 9 11
     exp <val_int> (40)
-        on left: 12 13
-        on right: 4 7 8 27 44
+        à gauche: 12 13
+        à droite: 4 7 8 27 44
     arith_exp <val_int> (41)
-        on left: 14 15 16 17 18 19 20
-        on right: 12 14 15 16 17 18 19 38 39
+        à gauche: 14 15 16 17 18 19 20
+        à droite: 12 14 15 16 17 18 19 38 39
     atom_exp <val_int> (42)
-        on left: 21 22 23 24 25 26 27
-        on right: 20 29 34
+        à gauche: 21 22 23 24 25 26 27
+        à droite: 20 29 34
     control_exp (43)
-        on left: 28
-        on right: 25
+        à gauche: 28
+        à droite: 25
     if_exp (44)
-        on left: 29
-        on right: 28
+        à gauche: 29
+        à droite: 28
     if <val_int> (45)
-        on left: 30
-        on right: 29
+        à gauche: 30
+        à droite: 29
     cond (46)
-        on left: 31
-        on right: 29
+        à gauche: 31
+        à droite: 29
     then <val_int> (47)
-        on left: 32
-        on right: 29
+        à gauche: 32
+        à droite: 29
     else <val_int> (48)
-        on left: 33
-        on right: 29
+        à gauche: 33
+        à droite: 29
     let_exp (49)
-        on left: 34 35
-        on right: 13 35
+        à gauche: 34 35
+        à droite: 13 35
     funcall_exp <val_string> (50)
-        on left: 36
-        on right: 26
+        à gauche: 36
+        à droite: 26
     fid <val_string> (51)
-        on left: 37
-        on right: 36
+        à gauche: 37
+        à droite: 36
     arg_list <val_int> (52)
-        on left: 38 39
-        on right: 36 39
+        à gauche: 38 39
+        à droite: 36 39
     bool (53)
-        on left: 40 41 42 43 44 45
-        on right: 31 41 42 43 45
+        à gauche: 40 41 42 43 44 45
+        à droite: 31 41 42 43 45
     comp <val_string> (54)
-        on left: 46 47 48 49 50
-        on right: 44
+        à gauche: 46 47 48 49 50
+        à droite: 44
 
 
-State 0
+État 0
 
     0 $accept: • prog $end
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    prog         go to state 9
-    inst         go to state 10
-    let_def      go to state 11
-    def_id       go to state 12
-    def_fun      go to state 13
-    exp          go to state 14
-    arith_exp    go to state 15
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 20
-    funcall_exp  go to state 21
-    fid          go to state 22
+    prog         aller à l'état 9
+    inst         aller à l'état 10
+    let_def      aller à l'état 11
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    exp          aller à l'état 14
+    arith_exp    aller à l'état 15
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 20
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 1
+État 1
 
    21 atom_exp: NUM •
 
-    $default  reduce using rule 21 (atom_exp)
+    $défaut  réduction par utilisation de la règle 21 (atom_exp)
 
 
-State 2
+État 2
 
    22 atom_exp: FLOAT •
 
-    $default  reduce using rule 22 (atom_exp)
+    $défaut  réduction par utilisation de la règle 22 (atom_exp)
 
 
-State 3
+État 3
 
    24 atom_exp: ID •
    37 fid: ID •
 
-    LPAR      reduce using rule 37 (fid)
-    $default  reduce using rule 24 (atom_exp)
+    LPAR     réduction par utilisation de la règle 37 (fid)
+    $défaut  réduction par utilisation de la règle 24 (atom_exp)
 
 
-State 4
+État 4
 
    23 atom_exp: STRING •
 
-    $default  reduce using rule 23 (atom_exp)
+    $défaut  réduction par utilisation de la règle 23 (atom_exp)
 
 
-State 5
+État 5
 
    27 atom_exp: LPAR • exp RPAR
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    let_def      go to state 23
-    def_id       go to state 12
-    def_fun      go to state 13
-    exp          go to state 24
-    arith_exp    go to state 15
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 20
-    funcall_exp  go to state 21
-    fid          go to state 22
+    let_def      aller à l'état 23
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    exp          aller à l'état 24
+    arith_exp    aller à l'état 15
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 20
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 6
+État 6
 
     7 def_id: LET • ID EQ exp
     8 def_fun: LET • fun_head EQ exp
 
-    ID  shift, and go to state 25
+    ID  décalage et aller à l'état 25
 
-    fun_head  go to state 26
+    fun_head  aller à l'état 26
 
 
-State 7
+État 7
 
    30 if: IF •
 
-    $default  reduce using rule 30 (if)
+    $défaut  réduction par utilisation de la règle 30 (if)
 
 
-State 8
+État 8
 
    14 arith_exp: MOINS • arith_exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    arith_exp    go to state 27
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    funcall_exp  go to state 21
-    fid          go to state 22
+    arith_exp    aller à l'état 27
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 9
+État 9
 
     0 $accept: prog • $end
     2 prog: prog • inst PV
 
-    $end    shift, and go to state 28
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    $end    décalage et aller à l'état 28
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    inst         go to state 29
-    let_def      go to state 11
-    def_id       go to state 12
-    def_fun      go to state 13
-    exp          go to state 14
-    arith_exp    go to state 15
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 20
-    funcall_exp  go to state 21
-    fid          go to state 22
+    inst         aller à l'état 29
+    let_def      aller à l'état 11
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    exp          aller à l'état 14
+    arith_exp    aller à l'état 15
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 20
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 10
+État 10
 
     1 prog: inst • PV
 
-    PV  shift, and go to state 30
+    PV  décalage et aller à l'état 30
 
 
-State 11
+État 11
 
     3 inst: let_def •
    34 let_exp: let_def • IN atom_exp
    35        | let_def • IN let_exp
 
-    IN  shift, and go to state 31
+    IN  décalage et aller à l'état 31
 
-    $default  reduce using rule 3 (inst)
+    $défaut  réduction par utilisation de la règle 3 (inst)
 
 
-State 12
+État 12
 
     5 let_def: def_id •
 
-    $default  reduce using rule 5 (let_def)
+    $défaut  réduction par utilisation de la règle 5 (let_def)
 
 
-State 13
+État 13
 
     6 let_def: def_fun •
 
-    $default  reduce using rule 6 (let_def)
+    $défaut  réduction par utilisation de la règle 6 (let_def)
 
 
-State 14
+État 14
 
     4 inst: exp •
 
-    $default  reduce using rule 4 (inst)
+    $défaut  réduction par utilisation de la règle 4 (inst)
 
 
-State 15
+État 15
 
    12 exp: arith_exp •
    15 arith_exp: arith_exp • MOINS arith_exp
@@ -384,98 +384,98 @@ State 15
    18          | arith_exp • MULT arith_exp
    19          | arith_exp • CONCAT arith_exp
 
-    PLUS    shift, and go to state 32
-    MOINS   shift, and go to state 33
-    MULT    shift, and go to state 34
-    DIV     shift, and go to state 35
-    CONCAT  shift, and go to state 36
+    PLUS    décalage et aller à l'état 32
+    MOINS   décalage et aller à l'état 33
+    MULT    décalage et aller à l'état 34
+    DIV     décalage et aller à l'état 35
+    CONCAT  décalage et aller à l'état 36
 
-    $default  reduce using rule 12 (exp)
+    $défaut  réduction par utilisation de la règle 12 (exp)
 
 
-State 16
+État 16
 
    20 arith_exp: atom_exp •
 
-    $default  reduce using rule 20 (arith_exp)
+    $défaut  réduction par utilisation de la règle 20 (arith_exp)
 
 
-State 17
+État 17
 
    25 atom_exp: control_exp •
 
-    $default  reduce using rule 25 (atom_exp)
+    $défaut  réduction par utilisation de la règle 25 (atom_exp)
 
 
-State 18
+État 18
 
    28 control_exp: if_exp •
 
-    $default  reduce using rule 28 (control_exp)
+    $défaut  réduction par utilisation de la règle 28 (control_exp)
 
 
-State 19
+État 19
 
    29 if_exp: if • cond then atom_exp else atom_exp
 
-    LPAR  shift, and go to state 37
+    LPAR  décalage et aller à l'état 37
 
-    cond  go to state 38
+    cond  aller à l'état 38
 
 
-State 20
+État 20
 
    13 exp: let_exp •
 
-    $default  reduce using rule 13 (exp)
+    $défaut  réduction par utilisation de la règle 13 (exp)
 
 
-State 21
+État 21
 
    26 atom_exp: funcall_exp •
 
-    $default  reduce using rule 26 (atom_exp)
+    $défaut  réduction par utilisation de la règle 26 (atom_exp)
 
 
-State 22
+État 22
 
    36 funcall_exp: fid • LPAR arg_list RPAR
 
-    LPAR  shift, and go to state 39
+    LPAR  décalage et aller à l'état 39
 
 
-State 23
+État 23
 
    34 let_exp: let_def • IN atom_exp
    35        | let_def • IN let_exp
 
-    IN  shift, and go to state 31
+    IN  décalage et aller à l'état 31
 
 
-State 24
+État 24
 
    27 atom_exp: LPAR exp • RPAR
 
-    RPAR  shift, and go to state 40
+    RPAR  décalage et aller à l'état 40
 
 
-State 25
+État 25
 
     7 def_id: LET ID • EQ exp
     9 fun_head: ID • LPAR id_list RPAR
 
-    LPAR  shift, and go to state 41
-    EQ    shift, and go to state 42
+    LPAR  décalage et aller à l'état 41
+    EQ    décalage et aller à l'état 42
 
 
-State 26
+État 26
 
     8 def_fun: LET fun_head • EQ exp
 
-    EQ  shift, and go to state 43
+    EQ  décalage et aller à l'état 43
 
 
-State 27
+État 27
 
    14 arith_exp: MOINS arith_exp •
    15          | arith_exp • MOINS arith_exp
@@ -484,313 +484,313 @@ State 27
    18          | arith_exp • MULT arith_exp
    19          | arith_exp • CONCAT arith_exp
 
-    $default  reduce using rule 14 (arith_exp)
+    $défaut  réduction par utilisation de la règle 14 (arith_exp)
 
 
-State 28
+État 28
 
     0 $accept: prog $end •
 
-    $default  accept
+    $défaut  accepter
 
 
-State 29
+État 29
 
     2 prog: prog inst • PV
 
-    PV  shift, and go to state 44
+    PV  décalage et aller à l'état 44
 
 
-State 30
+État 30
 
     1 prog: inst PV •
 
-    $default  reduce using rule 1 (prog)
+    $défaut  réduction par utilisation de la règle 1 (prog)
 
 
-State 31
+État 31
 
    34 let_exp: let_def IN • atom_exp
    35        | let_def IN • let_exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
 
-    let_def      go to state 23
-    def_id       go to state 12
-    def_fun      go to state 13
-    atom_exp     go to state 45
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 46
-    funcall_exp  go to state 21
-    fid          go to state 22
+    let_def      aller à l'état 23
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    atom_exp     aller à l'état 45
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 46
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 32
+État 32
 
    16 arith_exp: arith_exp PLUS • arith_exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    arith_exp    go to state 47
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    funcall_exp  go to state 21
-    fid          go to state 22
+    arith_exp    aller à l'état 47
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 33
+État 33
 
    15 arith_exp: arith_exp MOINS • arith_exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    arith_exp    go to state 48
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    funcall_exp  go to state 21
-    fid          go to state 22
+    arith_exp    aller à l'état 48
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 34
+État 34
 
    18 arith_exp: arith_exp MULT • arith_exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    arith_exp    go to state 49
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    funcall_exp  go to state 21
-    fid          go to state 22
+    arith_exp    aller à l'état 49
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 35
+État 35
 
    17 arith_exp: arith_exp DIV • arith_exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    arith_exp    go to state 50
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    funcall_exp  go to state 21
-    fid          go to state 22
+    arith_exp    aller à l'état 50
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 36
+État 36
 
    19 arith_exp: arith_exp CONCAT • arith_exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    arith_exp    go to state 51
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    funcall_exp  go to state 21
-    fid          go to state 22
+    arith_exp    aller à l'état 51
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 37
+État 37
 
    31 cond: LPAR • bool RPAR
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 52
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
-    NOT     shift, and go to state 53
-    BOOL    shift, and go to state 54
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 52
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
+    NOT     décalage et aller à l'état 53
+    BOOL    décalage et aller à l'état 54
+    MOINS   décalage et aller à l'état 8
 
-    let_def      go to state 23
-    def_id       go to state 12
-    def_fun      go to state 13
-    exp          go to state 55
-    arith_exp    go to state 15
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 20
-    funcall_exp  go to state 21
-    fid          go to state 22
-    bool         go to state 56
+    let_def      aller à l'état 23
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    exp          aller à l'état 55
+    arith_exp    aller à l'état 15
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 20
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
+    bool         aller à l'état 56
 
 
-State 38
+État 38
 
    29 if_exp: if cond • then atom_exp else atom_exp
 
-    THEN  shift, and go to state 57
+    THEN  décalage et aller à l'état 57
 
-    then  go to state 58
+    then  aller à l'état 58
 
 
-State 39
+État 39
 
    36 funcall_exp: fid LPAR • arg_list RPAR
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    arith_exp    go to state 59
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    funcall_exp  go to state 21
-    fid          go to state 22
-    arg_list     go to state 60
+    arith_exp    aller à l'état 59
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
+    arg_list     aller à l'état 60
 
 
-State 40
+État 40
 
    27 atom_exp: LPAR exp RPAR •
 
-    $default  reduce using rule 27 (atom_exp)
+    $défaut  réduction par utilisation de la règle 27 (atom_exp)
 
 
-State 41
+État 41
 
     9 fun_head: ID LPAR • id_list RPAR
 
-    ID  shift, and go to state 61
+    ID  décalage et aller à l'état 61
 
-    id_list  go to state 62
+    id_list  aller à l'état 62
 
 
-State 42
+État 42
 
     7 def_id: LET ID EQ • exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    let_def      go to state 23
-    def_id       go to state 12
-    def_fun      go to state 13
-    exp          go to state 63
-    arith_exp    go to state 15
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 20
-    funcall_exp  go to state 21
-    fid          go to state 22
+    let_def      aller à l'état 23
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    exp          aller à l'état 63
+    arith_exp    aller à l'état 15
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 20
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 43
+État 43
 
     8 def_fun: LET fun_head EQ • exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    let_def      go to state 23
-    def_id       go to state 12
-    def_fun      go to state 13
-    exp          go to state 64
-    arith_exp    go to state 15
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 20
-    funcall_exp  go to state 21
-    fid          go to state 22
+    let_def      aller à l'état 23
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    exp          aller à l'état 64
+    arith_exp    aller à l'état 15
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 20
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 44
+État 44
 
     2 prog: prog inst PV •
 
-    $default  reduce using rule 2 (prog)
+    $défaut  réduction par utilisation de la règle 2 (prog)
 
 
-State 45
+État 45
 
    34 let_exp: let_def IN atom_exp •
 
-    $default  reduce using rule 34 (let_exp)
+    $défaut  réduction par utilisation de la règle 34 (let_exp)
 
 
-State 46
+État 46
 
    35 let_exp: let_def IN let_exp •
 
-    $default  reduce using rule 35 (let_exp)
+    $défaut  réduction par utilisation de la règle 35 (let_exp)
 
 
-State 47
+État 47
 
    15 arith_exp: arith_exp • MOINS arith_exp
    16          | arith_exp • PLUS arith_exp
@@ -799,14 +799,14 @@ State 47
    18          | arith_exp • MULT arith_exp
    19          | arith_exp • CONCAT arith_exp
 
-    MULT    shift, and go to state 34
-    DIV     shift, and go to state 35
-    CONCAT  shift, and go to state 36
+    MULT    décalage et aller à l'état 34
+    DIV     décalage et aller à l'état 35
+    CONCAT  décalage et aller à l'état 36
 
-    $default  reduce using rule 16 (arith_exp)
+    $défaut  réduction par utilisation de la règle 16 (arith_exp)
 
 
-State 48
+État 48
 
    15 arith_exp: arith_exp • MOINS arith_exp
    15          | arith_exp MOINS arith_exp •
@@ -815,14 +815,14 @@ State 48
    18          | arith_exp • MULT arith_exp
    19          | arith_exp • CONCAT arith_exp
 
-    MULT    shift, and go to state 34
-    DIV     shift, and go to state 35
-    CONCAT  shift, and go to state 36
+    MULT    décalage et aller à l'état 34
+    DIV     décalage et aller à l'état 35
+    CONCAT  décalage et aller à l'état 36
 
-    $default  reduce using rule 15 (arith_exp)
+    $défaut  réduction par utilisation de la règle 15 (arith_exp)
 
 
-State 49
+État 49
 
    15 arith_exp: arith_exp • MOINS arith_exp
    16          | arith_exp • PLUS arith_exp
@@ -831,12 +831,12 @@ State 49
    18          | arith_exp MULT arith_exp •
    19          | arith_exp • CONCAT arith_exp
 
-    CONCAT  shift, and go to state 36
+    CONCAT  décalage et aller à l'état 36
 
-    $default  reduce using rule 18 (arith_exp)
+    $défaut  réduction par utilisation de la règle 18 (arith_exp)
 
 
-State 50
+État 50
 
    15 arith_exp: arith_exp • MOINS arith_exp
    16          | arith_exp • PLUS arith_exp
@@ -845,12 +845,12 @@ State 50
    18          | arith_exp • MULT arith_exp
    19          | arith_exp • CONCAT arith_exp
 
-    CONCAT  shift, and go to state 36
+    CONCAT  décalage et aller à l'état 36
 
-    $default  reduce using rule 17 (arith_exp)
+    $défaut  réduction par utilisation de la règle 17 (arith_exp)
 
 
-State 51
+État 51
 
    15 arith_exp: arith_exp • MOINS arith_exp
    16          | arith_exp • PLUS arith_exp
@@ -859,128 +859,128 @@ State 51
    19          | arith_exp • CONCAT arith_exp
    19          | arith_exp CONCAT arith_exp •
 
-    $default  reduce using rule 19 (arith_exp)
+    $défaut  réduction par utilisation de la règle 19 (arith_exp)
 
 
-State 52
+État 52
 
    27 atom_exp: LPAR • exp RPAR
    45 bool: LPAR • bool RPAR
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 52
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
-    NOT     shift, and go to state 53
-    BOOL    shift, and go to state 54
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 52
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
+    NOT     décalage et aller à l'état 53
+    BOOL    décalage et aller à l'état 54
+    MOINS   décalage et aller à l'état 8
 
-    let_def      go to state 23
-    def_id       go to state 12
-    def_fun      go to state 13
-    exp          go to state 65
-    arith_exp    go to state 15
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 20
-    funcall_exp  go to state 21
-    fid          go to state 22
-    bool         go to state 66
+    let_def      aller à l'état 23
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    exp          aller à l'état 65
+    arith_exp    aller à l'état 15
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 20
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
+    bool         aller à l'état 66
 
 
-State 53
+État 53
 
    43 bool: NOT • bool
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 52
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
-    NOT     shift, and go to state 53
-    BOOL    shift, and go to state 54
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 52
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
+    NOT     décalage et aller à l'état 53
+    BOOL    décalage et aller à l'état 54
+    MOINS   décalage et aller à l'état 8
 
-    let_def      go to state 23
-    def_id       go to state 12
-    def_fun      go to state 13
-    exp          go to state 55
-    arith_exp    go to state 15
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 20
-    funcall_exp  go to state 21
-    fid          go to state 22
-    bool         go to state 67
+    let_def      aller à l'état 23
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    exp          aller à l'état 55
+    arith_exp    aller à l'état 15
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 20
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
+    bool         aller à l'état 67
 
 
-State 54
+État 54
 
    40 bool: BOOL •
 
-    $default  reduce using rule 40 (bool)
+    $défaut  réduction par utilisation de la règle 40 (bool)
 
 
-State 55
+État 55
 
    44 bool: exp • comp exp
 
-    ISLT   shift, and go to state 68
-    ISGT   shift, and go to state 69
-    ISLEQ  shift, and go to state 70
-    ISGEQ  shift, and go to state 71
-    ISEQ   shift, and go to state 72
+    ISLT   décalage et aller à l'état 68
+    ISGT   décalage et aller à l'état 69
+    ISLEQ  décalage et aller à l'état 70
+    ISGEQ  décalage et aller à l'état 71
+    ISEQ   décalage et aller à l'état 72
 
-    comp  go to state 73
+    comp  aller à l'état 73
 
 
-State 56
+État 56
 
    31 cond: LPAR bool • RPAR
    41 bool: bool • OR bool
    42     | bool • AND bool
 
-    RPAR  shift, and go to state 74
-    AND   shift, and go to state 75
-    OR    shift, and go to state 76
+    RPAR  décalage et aller à l'état 74
+    AND   décalage et aller à l'état 75
+    OR    décalage et aller à l'état 76
 
 
-State 57
+État 57
 
    32 then: THEN •
 
-    $default  reduce using rule 32 (then)
+    $défaut  réduction par utilisation de la règle 32 (then)
 
 
-State 58
+État 58
 
    29 if_exp: if cond then • atom_exp else atom_exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    IF      shift, and go to state 7
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    IF      décalage et aller à l'état 7
 
-    atom_exp     go to state 77
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    funcall_exp  go to state 21
-    fid          go to state 22
+    atom_exp     aller à l'état 77
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 59
+État 59
 
    15 arith_exp: arith_exp • MOINS arith_exp
    16          | arith_exp • PLUS arith_exp
@@ -989,330 +989,330 @@ State 59
    19          | arith_exp • CONCAT arith_exp
    38 arg_list: arith_exp •
 
-    PLUS    shift, and go to state 32
-    MOINS   shift, and go to state 33
-    MULT    shift, and go to state 34
-    DIV     shift, and go to state 35
-    CONCAT  shift, and go to state 36
+    PLUS    décalage et aller à l'état 32
+    MOINS   décalage et aller à l'état 33
+    MULT    décalage et aller à l'état 34
+    DIV     décalage et aller à l'état 35
+    CONCAT  décalage et aller à l'état 36
 
-    $default  reduce using rule 38 (arg_list)
+    $défaut  réduction par utilisation de la règle 38 (arg_list)
 
 
-State 60
+État 60
 
    36 funcall_exp: fid LPAR arg_list • RPAR
    39 arg_list: arg_list • VIR arith_exp
 
-    RPAR  shift, and go to state 78
-    VIR   shift, and go to state 79
+    RPAR  décalage et aller à l'état 78
+    VIR   décalage et aller à l'état 79
 
 
-State 61
+État 61
 
    10 id_list: ID •
 
-    $default  reduce using rule 10 (id_list)
+    $défaut  réduction par utilisation de la règle 10 (id_list)
 
 
-State 62
+État 62
 
     9 fun_head: ID LPAR id_list • RPAR
    11 id_list: id_list • VIR ID
 
-    RPAR  shift, and go to state 80
-    VIR   shift, and go to state 81
+    RPAR  décalage et aller à l'état 80
+    VIR   décalage et aller à l'état 81
 
 
-State 63
+État 63
 
     7 def_id: LET ID EQ exp •
 
-    $default  reduce using rule 7 (def_id)
+    $défaut  réduction par utilisation de la règle 7 (def_id)
 
 
-State 64
+État 64
 
     8 def_fun: LET fun_head EQ exp •
 
-    $default  reduce using rule 8 (def_fun)
+    $défaut  réduction par utilisation de la règle 8 (def_fun)
 
 
-State 65
+État 65
 
    27 atom_exp: LPAR exp • RPAR
    44 bool: exp • comp exp
 
-    RPAR   shift, and go to state 40
-    ISLT   shift, and go to state 68
-    ISGT   shift, and go to state 69
-    ISLEQ  shift, and go to state 70
-    ISGEQ  shift, and go to state 71
-    ISEQ   shift, and go to state 72
+    RPAR   décalage et aller à l'état 40
+    ISLT   décalage et aller à l'état 68
+    ISGT   décalage et aller à l'état 69
+    ISLEQ  décalage et aller à l'état 70
+    ISGEQ  décalage et aller à l'état 71
+    ISEQ   décalage et aller à l'état 72
 
-    comp  go to state 73
+    comp  aller à l'état 73
 
 
-State 66
+État 66
 
    41 bool: bool • OR bool
    42     | bool • AND bool
    45     | LPAR bool • RPAR
 
-    RPAR  shift, and go to state 82
-    AND   shift, and go to state 75
-    OR    shift, and go to state 76
+    RPAR  décalage et aller à l'état 82
+    AND   décalage et aller à l'état 75
+    OR    décalage et aller à l'état 76
 
 
-State 67
+État 67
 
    41 bool: bool • OR bool
    42     | bool • AND bool
    43     | NOT bool •
 
-    $default  reduce using rule 43 (bool)
+    $défaut  réduction par utilisation de la règle 43 (bool)
 
 
-State 68
+État 68
 
    46 comp: ISLT •
 
-    $default  reduce using rule 46 (comp)
+    $défaut  réduction par utilisation de la règle 46 (comp)
 
 
-State 69
+État 69
 
    47 comp: ISGT •
 
-    $default  reduce using rule 47 (comp)
+    $défaut  réduction par utilisation de la règle 47 (comp)
 
 
-State 70
+État 70
 
    48 comp: ISLEQ •
 
-    $default  reduce using rule 48 (comp)
+    $défaut  réduction par utilisation de la règle 48 (comp)
 
 
-State 71
+État 71
 
    49 comp: ISGEQ •
 
-    $default  reduce using rule 49 (comp)
+    $défaut  réduction par utilisation de la règle 49 (comp)
 
 
-State 72
+État 72
 
    50 comp: ISEQ •
 
-    $default  reduce using rule 50 (comp)
+    $défaut  réduction par utilisation de la règle 50 (comp)
 
 
-State 73
+État 73
 
    44 bool: exp comp • exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    let_def      go to state 23
-    def_id       go to state 12
-    def_fun      go to state 13
-    exp          go to state 83
-    arith_exp    go to state 15
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 20
-    funcall_exp  go to state 21
-    fid          go to state 22
+    let_def      aller à l'état 23
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    exp          aller à l'état 83
+    arith_exp    aller à l'état 15
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 20
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 74
+État 74
 
    31 cond: LPAR bool RPAR •
 
-    $default  reduce using rule 31 (cond)
+    $défaut  réduction par utilisation de la règle 31 (cond)
 
 
-State 75
+État 75
 
    42 bool: bool AND • bool
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 52
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
-    NOT     shift, and go to state 53
-    BOOL    shift, and go to state 54
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 52
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
+    NOT     décalage et aller à l'état 53
+    BOOL    décalage et aller à l'état 54
+    MOINS   décalage et aller à l'état 8
 
-    let_def      go to state 23
-    def_id       go to state 12
-    def_fun      go to state 13
-    exp          go to state 55
-    arith_exp    go to state 15
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 20
-    funcall_exp  go to state 21
-    fid          go to state 22
-    bool         go to state 84
+    let_def      aller à l'état 23
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    exp          aller à l'état 55
+    arith_exp    aller à l'état 15
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 20
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
+    bool         aller à l'état 84
 
 
-State 76
+État 76
 
    41 bool: bool OR • bool
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 52
-    LET     shift, and go to state 6
-    IF      shift, and go to state 7
-    NOT     shift, and go to state 53
-    BOOL    shift, and go to state 54
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 52
+    LET     décalage et aller à l'état 6
+    IF      décalage et aller à l'état 7
+    NOT     décalage et aller à l'état 53
+    BOOL    décalage et aller à l'état 54
+    MOINS   décalage et aller à l'état 8
 
-    let_def      go to state 23
-    def_id       go to state 12
-    def_fun      go to state 13
-    exp          go to state 55
-    arith_exp    go to state 15
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    let_exp      go to state 20
-    funcall_exp  go to state 21
-    fid          go to state 22
-    bool         go to state 85
+    let_def      aller à l'état 23
+    def_id       aller à l'état 12
+    def_fun      aller à l'état 13
+    exp          aller à l'état 55
+    arith_exp    aller à l'état 15
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    let_exp      aller à l'état 20
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
+    bool         aller à l'état 85
 
 
-State 77
+État 77
 
    29 if_exp: if cond then atom_exp • else atom_exp
 
-    ELSE  shift, and go to state 86
+    ELSE  décalage et aller à l'état 86
 
-    else  go to state 87
+    else  aller à l'état 87
 
 
-State 78
+État 78
 
    36 funcall_exp: fid LPAR arg_list RPAR •
 
-    $default  reduce using rule 36 (funcall_exp)
+    $défaut  réduction par utilisation de la règle 36 (funcall_exp)
 
 
-State 79
+État 79
 
    39 arg_list: arg_list VIR • arith_exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    IF      shift, and go to state 7
-    MOINS   shift, and go to state 8
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    IF      décalage et aller à l'état 7
+    MOINS   décalage et aller à l'état 8
 
-    arith_exp    go to state 88
-    atom_exp     go to state 16
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    funcall_exp  go to state 21
-    fid          go to state 22
+    arith_exp    aller à l'état 88
+    atom_exp     aller à l'état 16
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 80
+État 80
 
     9 fun_head: ID LPAR id_list RPAR •
 
-    $default  reduce using rule 9 (fun_head)
+    $défaut  réduction par utilisation de la règle 9 (fun_head)
 
 
-State 81
+État 81
 
    11 id_list: id_list VIR • ID
 
-    ID  shift, and go to state 89
+    ID  décalage et aller à l'état 89
 
 
-State 82
+État 82
 
    45 bool: LPAR bool RPAR •
 
-    $default  reduce using rule 45 (bool)
+    $défaut  réduction par utilisation de la règle 45 (bool)
 
 
-State 83
+État 83
 
    44 bool: exp comp exp •
 
-    $default  reduce using rule 44 (bool)
+    $défaut  réduction par utilisation de la règle 44 (bool)
 
 
-State 84
+État 84
 
    41 bool: bool • OR bool
    42     | bool • AND bool
    42     | bool AND bool •
 
-    $default  reduce using rule 42 (bool)
+    $défaut  réduction par utilisation de la règle 42 (bool)
 
 
-State 85
+État 85
 
    41 bool: bool • OR bool
    41     | bool OR bool •
    42     | bool • AND bool
 
-    AND  shift, and go to state 75
+    AND  décalage et aller à l'état 75
 
-    $default  reduce using rule 41 (bool)
+    $défaut  réduction par utilisation de la règle 41 (bool)
 
 
-State 86
+État 86
 
    33 else: ELSE •
 
-    $default  reduce using rule 33 (else)
+    $défaut  réduction par utilisation de la règle 33 (else)
 
 
-State 87
+État 87
 
    29 if_exp: if cond then atom_exp else • atom_exp
 
-    NUM     shift, and go to state 1
-    FLOAT   shift, and go to state 2
-    ID      shift, and go to state 3
-    STRING  shift, and go to state 4
-    LPAR    shift, and go to state 5
-    IF      shift, and go to state 7
+    NUM     décalage et aller à l'état 1
+    FLOAT   décalage et aller à l'état 2
+    ID      décalage et aller à l'état 3
+    STRING  décalage et aller à l'état 4
+    LPAR    décalage et aller à l'état 5
+    IF      décalage et aller à l'état 7
 
-    atom_exp     go to state 90
-    control_exp  go to state 17
-    if_exp       go to state 18
-    if           go to state 19
-    funcall_exp  go to state 21
-    fid          go to state 22
+    atom_exp     aller à l'état 90
+    control_exp  aller à l'état 17
+    if_exp       aller à l'état 18
+    if           aller à l'état 19
+    funcall_exp  aller à l'état 21
+    fid          aller à l'état 22
 
 
-State 88
+État 88
 
    15 arith_exp: arith_exp • MOINS arith_exp
    16          | arith_exp • PLUS arith_exp
@@ -1321,24 +1321,24 @@ State 88
    19          | arith_exp • CONCAT arith_exp
    39 arg_list: arg_list VIR arith_exp •
 
-    PLUS    shift, and go to state 32
-    MOINS   shift, and go to state 33
-    MULT    shift, and go to state 34
-    DIV     shift, and go to state 35
-    CONCAT  shift, and go to state 36
+    PLUS    décalage et aller à l'état 32
+    MOINS   décalage et aller à l'état 33
+    MULT    décalage et aller à l'état 34
+    DIV     décalage et aller à l'état 35
+    CONCAT  décalage et aller à l'état 36
 
-    $default  reduce using rule 39 (arg_list)
+    $défaut  réduction par utilisation de la règle 39 (arg_list)
 
 
-State 89
+État 89
 
    11 id_list: id_list VIR ID •
 
-    $default  reduce using rule 11 (id_list)
+    $défaut  réduction par utilisation de la règle 11 (id_list)
 
 
-State 90
+État 90
 
    29 if_exp: if cond then atom_exp else atom_exp •
 
-    $default  reduce using rule 29 (if_exp)
+    $défaut  réduction par utilisation de la règle 29 (if_exp)

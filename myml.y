@@ -18,7 +18,6 @@ int offset = 0;
 int label_number = 0;
 int nb_if = 0;
 int arg_nb = 1;
-int fp = 0;
 // char *func_name = "";
 
 
@@ -105,7 +104,7 @@ fun_head : ID LPAR id_list RPAR {$$ = $1; file_out_function = fopen("test.fp", "
 /* fun_head : ID LPAR id_list RPAR {fp = offset; offset = 0; add_symbol_value($1, offset); offset++; printf("void call_%s(){\n", $1);} //  stdout = fopen("test.fp", "w"); */
 ;
 
-id_list : ID {add_symbol_value($<val_string>-1, offset++); add_symbol_value($1, offset++);} 
+id_list : ID {add_symbol_value($<val_string>-2, offset); offset = 1; add_symbol_value($1, offset++);} 
 // 1re règle exécutée lors de la déclaration d'une fonction --> on stocke l'offset avant déclaration de la fonction dans la table des symbol avec le nom de la fonction comme symbol
 | id_list VIR ID {add_symbol_value($3, offset++);}
 ;
@@ -140,7 +139,6 @@ control_exp : if_exp {}
 if_exp : if cond then atom_exp else atom_exp {printf("L%d:\n/* End if-then-else */\n",label_number+1); label_number = label_number - (2*(nb_if-1));}
 ;
 /* Comment numeroter les labels ?
-
 Chaque if correspond a un multiple de 2 différents
 Ajouter 2 au label_number à chque ouverture de if, et incrementer le compteur de if (nb_if)
 A la fin d'une boucle if: décrémenter correctement le label_number ( actuellement retire 2*(nb_if-1) )
@@ -155,7 +153,7 @@ let_exp : let_def IN atom_exp {delete_symbol_value(); offset--; printf("DRCP  (l
 | let_def IN let_exp {delete_symbol_value(); offset--; printf("DRCP (l.152)\n");}
 ;
 
-funcall_exp : fid LPAR arg_list RPAR {$$=$1; printf("CALL call_%s\n", $1); offset = get_symbol_value($1); printf("/* Restoring P-stack, with returned value added */\nRESTORE %d\n", $3);}
+funcall_exp : fid LPAR arg_list RPAR {printf("CALL call_%s\n", $1); offset = get_symbol_value($1); printf("/* Restoring P-stack, with returned value added */\nRESTORE %d\n", offset);}
 ;
  
 fid: ID {printf("/* Preparing %s call with %d argument(s) */\nSAVEFP\n", $1, arg_nb); $$=$1; add_symbol_value($1, offset);}
@@ -169,7 +167,7 @@ bool : BOOL
 | bool OR bool
 | bool AND bool
 | NOT bool %prec UNA 
-| exp comp exp {printf("%s\n /* condition loaded */\n", $2);}
+| exp comp exp {printf("%s\n/* condition loaded */\n", $2);}
 | LPAR bool RPAR
 ;
 
